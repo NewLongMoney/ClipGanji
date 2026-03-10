@@ -15,23 +15,21 @@ export function PhoneMockup() {
             <div className="absolute inset-0 bg-ink" />
 
 
-            {/* Brand Logo — centered mid-frame above the UI overlay */}
-            <div className="absolute left-4 bottom-32 z-20 w-36 h-18 opacity-90 drop-shadow-[0_0_16px_rgba(0,0,0,0.9)]">
-                <div className="relative w-36 h-16">
-                    <Image
-                        src="/images/2.png"
-                        alt="Brand Logo"
-                        fill
-                        className="object-contain object-left"
-                    />
-                </div>
-            </div>
-
             {/* Fake UI Overlay */}
-            <div className="absolute inset-x-0 bottom-0 p-4 pb-12 bg-gradient-to-t from-black/95 via-black/50 to-transparent z-10">
-                <div className="flex items-end justify-between mb-2">
-                    <div className="flex-1 pr-4">
-                        <div className="font-sans font-medium text-white text-sm mb-1 mt-auto">
+            <div className="absolute inset-x-0 bottom-0 pb-10 bg-gradient-to-t from-black/95 via-black/60 to-transparent z-10">
+                {/* Logo + Icons row — logo fills the left area at icon level */}
+                <div className="flex items-end justify-between px-4 mb-3">
+                    {/* Logo fills the left space at the level of the action icons */}
+                    <div className="flex-1 pr-3">
+                        <div className="relative w-full h-20 mb-3 opacity-95 drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]">
+                            <Image
+                                src="/images/2.png"
+                                alt="Brand Logo"
+                                fill
+                                className="object-contain object-left"
+                            />
+                        </div>
+                        <div className="font-sans font-medium text-white text-sm mb-1">
                             @clipganji_creator
                         </div>
                         <div className="font-sans text-xs text-white/80 line-clamp-2">
@@ -39,7 +37,7 @@ export function PhoneMockup() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-4 items-center mb-2">
+                    <div className="flex flex-col gap-4 items-center">
                         <div className="w-10 h-10 rounded-full bg-border flex items-center justify-center text-white/80 overflow-hidden border border-white/20">
                             <div className="w-full h-full bg-gray" />
                         </div>
@@ -67,7 +65,7 @@ export function PhoneMockup() {
                 </div>
 
                 {/* Fake Music Scroller */}
-                <div className="flex items-center gap-2 mt-3 overflow-hidden">
+                <div className="flex items-center gap-2 px-4 overflow-hidden">
                     <div className="w-3 h-3 text-white">🎵</div>
                     <div className="font-sans text-xs text-white font-normal truncate">
                         original sound - ClipGanji
