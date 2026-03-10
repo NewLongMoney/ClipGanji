@@ -135,8 +135,8 @@ export function ContactCTA() {
 
                                 <div className="mt-12 pt-8 border-t border-black/20 font-sans font-medium">
                                     <div className="text-black/60 mb-2">Or reach us directly:</div>
-                                    <div className="text-xl">0702 005 560</div>
-                                    <div className="text-xl">@NewLongMoney</div>
+                                    <div className="text-xl">0704 096 417</div>
+                                    <div className="text-xl">clipganji@gmail.com</div>
                                 </div>
                             </>
                         )}

@@ -27,7 +27,7 @@ export function AdFormats() {
                             body="Your brand logo sits in the corner of every clip for the full duration. Permanent. Persistent. Visible on every frame — whether the viewer watches for 3 seconds or 3 minutes."
                             price="From KSh 25,000 / 50,000 views"
                             tag="Best for: Brand awareness · Recognition · Recall"
-                            accent="green"
+                            accent="gold"
                             className="h-full"
                         />
                     </motion.div>

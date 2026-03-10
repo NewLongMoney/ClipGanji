@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { cn } from "@/app/lib/utils"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/app/components/ui/Button"
@@ -34,8 +35,14 @@ export function Navbar() {
         >
             <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-1 group animate-brand-hover">
-                    <span className="font-anton text-3xl text-white group-hover:text-inherit transition-colors">CLIP</span>
-                    <span className="font-anton text-3xl text-green group-hover:text-inherit transition-colors">GANJI</span>
+                    <div className="relative w-32 h-10">
+                        <Image
+                            src="/images/2.png"
+                            alt="CLIPGANJI"
+                            fill
+                            className="object-contain"
+                        />
+                    </div>
                 </Link>
 
                 {/* Desktop Nav */}

@@ -19,17 +19,7 @@ export function PhoneMockup() {
             <div className="absolute inset-x-0 bottom-0 p-4 pb-12 bg-gradient-to-t from-black/95 via-black/50 to-transparent z-10">
                 <div className="flex items-end justify-between mb-2">
                     <div className="flex-1 pr-4">
-                        {/* Enlarged Brand Logo (1.5x) positioned lower, shoulder-to-shoulder with UI icons */}
-                        <div className="w-1/2 max-w-[150px] opacity-95 filter drop-shadow-[0_0_12px_rgba(0,0,0,0.8)] relative aspect-video mb-4">
-                            <Image
-                                src="/images/2.png"
-                                alt="Brand Logo"
-                                fill
-                                className="object-contain"
-                            />
-                        </div>
-
-                        <div className="font-sans font-medium text-white text-sm mb-1">
+                        <div className="font-sans font-medium text-white text-sm mb-1 mt-auto">
                             @clipganji_creator
                         </div>
                         <div className="font-sans text-xs text-white/80 line-clamp-2">
@@ -52,7 +42,16 @@ export function PhoneMockup() {
                             <span className="text-[10px] text-white font-medium">1,204</span>
                         </div>
 
-                        <div className="flex flex-col items-center gap-1">
+                        <div className="flex flex-col items-center gap-1 relative">
+                            {/* Enlarged Brand Logo (1.5x more) positioned shoulder-to-shoulder with Bookmark/8K icon */}
+                            <div className="absolute right-full mr-12 top-1/2 -translate-y-1/2 w-48 h-24 opacity-95 filter drop-shadow-[0_0_12px_rgba(0,0,0,0.8)]">
+                                <Image
+                                    src="/images/2.png"
+                                    alt="Brand Logo"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
                             <Bookmark className="w-6 h-6 text-white drop-shadow-md" />
                             <span className="text-[10px] text-white font-medium">8K</span>
                         </div>

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 
 export function Footer() {
     const currentYear = new Date().getFullYear()
@@ -10,8 +11,14 @@ export function Footer() {
                     {/* Column 1 */}
                     <div>
                         <Link href="/" className="inline-flex items-center gap-1 mb-6">
-                            <span className="font-anton text-4xl text-white">CLIP</span>
-                            <span className="font-anton text-4xl text-green">GANJI</span>
+                            <div className="relative w-40 h-12">
+                                <Image
+                                    src="/images/2.png"
+                                    alt="CLIPGANJI"
+                                    fill
+                                    className="object-contain object-left"
+                                />
+                            </div>
                         </Link>
                         <p className="font-sans text-gray-light max-w-xs leading-relaxed">
                             Kenya&apos;s short-form video advertising network. Your brand inside every clip.
@@ -32,10 +39,10 @@ export function Footer() {
                     <div className="flex flex-col gap-4">
                         <h4 className="font-mono text-white text-sm tracking-widest uppercase mb-2">Contact</h4>
                         <div className="font-sans text-gray-light">
-                            <a href="tel:0702005560" className="hover:text-green transition-colors">0702 005 560</a>
+                            <a href="tel:0704096417" className="hover:text-gold transition-colors">0704 096 417</a>
                         </div>
                         <div className="font-sans text-gray-light">
-                            <span className="hover:text-green transition-colors cursor-pointer">@NewLongMoney</span>
+                            <a href="mailto:clipganji@gmail.com" className="hover:text-gold transition-colors">clipganji@gmail.com</a>
                         </div>
                         <div className="font-sans text-gray-light mt-4">
                             Nairobi, Kenya

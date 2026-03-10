@@ -71,9 +71,6 @@ export function Hero() {
                         <Link href="/rates">See Rates</Link>
                     </Button>
                     <Button variant="outline-white" size="lg" className="w-full sm:w-auto" asChild>
-                        <a href="/downloads/Clip Ganji PitchDeck for Betting Companies (2).pdf" download>Download Pitch Deck</a>
-                    </Button>
-                    <Button variant="outline-white" size="lg" className="w-full sm:w-auto" asChild>
                         <Link href="/contact">Book a Call</Link>
                     </Button>
                 </motion.div>
