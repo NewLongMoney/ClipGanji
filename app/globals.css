@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --black: #060809;
+  --ink: #0E1214;
+  --green: #00C853;
+  --green-dim: #00A844;
+  --green-bg: #E8F9EE;
+  --gold: #F5B800;
+  --gold-dim: #C99600;
+  --white: #FFFFFF;
+  --gray: #4A5259;
+  --gray-light: #8A949C;
+  --gray-bg: #F2F2F2;
+  --card: #141414;
+  --border: #1E2428;
+
+  --background: var(--black);
+  --foreground: var(--white);
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-dm-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Grain overlay */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Glow radials for hero */
+.hero-glow-green {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 200, 83, 0.12) 0%, transparent 70%);
+  bottom: -100px;
+  left: -100px;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+@keyframes color-shift {
+  0% {
+    color: var(--white);
+  }
+
+  33% {
+    color: var(--green);
+  }
+
+  66% {
+    color: var(--gold);
+  }
+
+  100% {
+    color: var(--white);
+  }
+}
+
+.animate-brand-hover:hover {
+  animation: color-shift 1.5s infinite linear;
+}
+
+.hero-glow-gold {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(245, 184, 0, 0.08) 0%, transparent 70%);
+  top: -50px;
+  right: -50px;
+  filter: blur(60px);
+  pointer-events: none;
+}
