@@ -15,6 +15,18 @@ export function PhoneMockup() {
             <div className="absolute inset-0 bg-ink" />
 
 
+            {/* Brand Logo — centered mid-frame above the UI overlay */}
+            <div className="absolute left-4 bottom-32 z-20 w-36 h-18 opacity-90 drop-shadow-[0_0_16px_rgba(0,0,0,0.9)]">
+                <div className="relative w-36 h-16">
+                    <Image
+                        src="/images/2.png"
+                        alt="Brand Logo"
+                        fill
+                        className="object-contain object-left"
+                    />
+                </div>
+            </div>
+
             {/* Fake UI Overlay */}
             <div className="absolute inset-x-0 bottom-0 p-4 pb-12 bg-gradient-to-t from-black/95 via-black/50 to-transparent z-10">
                 <div className="flex items-end justify-between mb-2">
@@ -42,16 +54,7 @@ export function PhoneMockup() {
                             <span className="text-[10px] text-white font-medium">1,204</span>
                         </div>
 
-                        <div className="flex flex-col items-center gap-1 relative">
-                            {/* Enlarged Brand Logo (1.5x more) positioned shoulder-to-shoulder with Bookmark/8K icon */}
-                            <div className="absolute right-full mr-12 top-1/2 -translate-y-1/2 w-48 h-24 opacity-95 filter drop-shadow-[0_0_12px_rgba(0,0,0,0.8)]">
-                                <Image
-                                    src="/images/2.png"
-                                    alt="Brand Logo"
-                                    fill
-                                    className="object-contain"
-                                />
-                            </div>
+                        <div className="flex flex-col items-center gap-1">
                             <Bookmark className="w-6 h-6 text-white drop-shadow-md" />
                             <span className="text-[10px] text-white font-medium">8K</span>
                         </div>

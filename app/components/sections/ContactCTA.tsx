@@ -15,7 +15,7 @@ export function ContactCTA() {
         const data = Object.fromEntries(formData.entries())
 
         try {
-            const response = await fetch("https://formspree.io/f/xyzzllee", { // Note: Replace with actual ID or explain to user
+            const response = await fetch("/api/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),

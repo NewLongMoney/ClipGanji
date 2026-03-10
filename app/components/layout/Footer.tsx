@@ -11,7 +11,7 @@ export function Footer() {
                     {/* Column 1 */}
                     <div>
                         <Link href="/" className="inline-flex items-center gap-1 mb-6">
-                            <div className="relative w-40 h-12">
+                            <div className="relative w-52 h-16">
                                 <Image
                                     src="/images/2.png"
                                     alt="CLIPGANJI"
