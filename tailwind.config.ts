@@ -17,8 +17,8 @@ const config: Config = {
           bg: "#E8F9EE",
         },
         gold: {
-          DEFAULT: "#F5B800",
-          dim: "#C99600",
+          DEFAULT: "#ca8a04",
+          dim: "#a16207",
         },
         white: "#FFFFFF",
         gray: {

@@ -8,8 +8,8 @@
   --green: #00C853;
   --green-dim: #00A844;
   --green-bg: #E8F9EE;
-  --gold: #F5B800;
-  --gold-dim: #C99600;
+  --gold: #ca8a04;
+  --gold-dim: #a16207;
   --white: #FFFFFF;
   --gray: #4A5259;
   --gray-light: #8A949C;
@@ -83,9 +83,9 @@ body {
   position: absolute;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(245, 184, 0, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(202, 138, 4, 0.15) 0%, transparent 70%);
   top: -50px;
   right: -50px;
-  filter: blur(60px);
+  filter: blur(80px);
   pointer-events: none;
 }

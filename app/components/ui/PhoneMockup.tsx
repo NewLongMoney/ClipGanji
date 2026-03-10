@@ -17,20 +17,18 @@ export function PhoneMockup() {
 
             {/* Fake UI Overlay */}
             <div className="absolute inset-x-0 bottom-0 p-4 pb-12 bg-gradient-to-t from-black/95 via-black/50 to-transparent z-10">
-                <div className="flex flex-col items-center w-full mb-4">
-                    {/* Centered Brand Logo in Lower Third (above text) */}
-                    <div className="w-1/3 max-w-[120px] opacity-90 filter drop-shadow-[0_0_12px_rgba(0,0,0,0.6)] relative aspect-video">
-                        <Image
-                            src="/images/2.png"
-                            alt="Brand Logo"
-                            fill
-                            className="object-contain"
-                        />
-                    </div>
-                </div>
-
-                <div className="flex items-end justify-between">
+                <div className="flex items-end justify-between mb-2">
                     <div className="flex-1 pr-4">
+                        {/* Enlarged Brand Logo (1.5x) positioned lower, shoulder-to-shoulder with UI icons */}
+                        <div className="w-1/2 max-w-[150px] opacity-95 filter drop-shadow-[0_0_12px_rgba(0,0,0,0.8)] relative aspect-video mb-4">
+                            <Image
+                                src="/images/2.png"
+                                alt="Brand Logo"
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
+
                         <div className="font-sans font-medium text-white text-sm mb-1">
                             @clipganji_creator
                         </div>
@@ -79,6 +77,6 @@ export function PhoneMockup() {
             <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20 z-20">
                 <div className="h-full bg-white/80 w-1/3" />
             </div>
-        </motion.div>
+        </motion.div >
     )
 }

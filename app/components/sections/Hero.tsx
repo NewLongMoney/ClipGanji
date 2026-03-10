@@ -47,7 +47,7 @@ export function Hero() {
                 >
                     <motion.div variants={itemVariants}>Your brand inside</motion.div>
                     <motion.div variants={itemVariants}><span className="text-gray/50">every</span> clip.</motion.div>
-                    <motion.div variants={itemVariants}>Every view <span className="text-green">verified.</span></motion.div>
+                    <motion.div variants={itemVariants}>Every view <span className="text-gold">verified.</span></motion.div>
                 </motion.h1>
 
                 <motion.p

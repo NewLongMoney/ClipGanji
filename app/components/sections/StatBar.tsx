@@ -12,7 +12,7 @@ export function StatBar() {
     ]
 
     return (
-        <section className="bg-green py-20 w-full">
+        <section className="bg-gold py-20 w-full">
             <div className="container mx-auto px-6 max-w-7xl">
                 <motion.div
                     className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center text-black"
