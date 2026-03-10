@@ -20,8 +20,8 @@ export function PhoneMockup() {
                 {/* Logo + Icons row — logo fills the left area at icon level */}
                 <div className="flex items-end justify-between px-4 mb-3">
                     {/* Logo fills the left space at the level of the action icons */}
-                    <div className="flex-1 pr-3">
-                        <div className="relative w-full h-20 mb-3 opacity-95 drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]">
+                    <div className="flex-1 pr-2">
+                        <div className="relative w-full h-24 mb-3 opacity-95 drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]">
                             <Image
                                 src="/images/2.png"
                                 alt="Brand Logo"
@@ -32,7 +32,7 @@ export function PhoneMockup() {
                         <div className="font-sans font-medium text-white text-sm mb-1">
                             @clipganji_creator
                         </div>
-                        <div className="font-sans text-xs text-white/80 line-clamp-2">
+                        <div className="font-sans text-xs text-white/80 line-clamp-1">
                             Wait until the end 🤯 This is why we created the best network in Kenya. Let&apos;s go! 🚀
                         </div>
                     </div>

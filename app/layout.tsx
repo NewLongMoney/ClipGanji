@@ -31,7 +31,10 @@ export const metadata: Metadata = {
     siteName: "ClipGanji",
     locale: "en_KE",
     type: "website",
-  }
+  },
+  icons: {
+    icon: "/images/2.png",
+  },
 };
 
 export default function RootLayout({
