@@ -17,9 +17,9 @@ export function PhoneMockup() {
 
             {/* Fake UI Overlay */}
             <div className="absolute inset-x-0 bottom-0 p-4 pb-12 bg-gradient-to-t from-black/95 via-black/50 to-transparent z-10">
-                <div className="flex flex-col items-center w-full mb-8">
-                    {/* Centered Brand Logo in Lower Third */}
-                    <div className="w-1/2 max-w-[140px] opacity-90 filter drop-shadow-[0_0_12px_rgba(0,0,0,0.6)] relative aspect-video">
+                <div className="flex flex-col items-center w-full mb-4">
+                    {/* Centered Brand Logo in Lower Third (above text) */}
+                    <div className="w-1/3 max-w-[120px] opacity-90 filter drop-shadow-[0_0_12px_rgba(0,0,0,0.6)] relative aspect-video">
                         <Image
                             src="/images/2.png"
                             alt="Brand Logo"
