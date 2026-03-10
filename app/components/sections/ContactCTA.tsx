@@ -80,45 +80,65 @@ export function ContactCTA() {
                         ) : (
                             <>
                                 <form onSubmit={handleSubmit} className="flex flex-col gap-4 font-sans">
-                                    <input
-                                        type="text"
-                                        name="companyName"
-                                        placeholder="Company Name"
-                                        required
-                                        className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors"
-                                    />
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="Your Name"
-                                        required
-                                        className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors"
-                                    />
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        placeholder="Email Address"
-                                        required
-                                        className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors"
-                                    />
-                                    <select
-                                        name="budget"
-                                        required
-                                        className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors appearance-none"
-                                    >
-                                        <option value="" disabled selected>Budget Range</option>
-                                        <option value="25K-80K">KSh 25K–80K</option>
-                                        <option value="80K-175K">KSh 80K–175K</option>
-                                        <option value="175K-500K">KSh 175K–500K</option>
-                                        <option value="500K+">KSh 500K+</option>
-                                    </select>
-                                    <textarea
-                                        name="message"
-                                        placeholder="Message / Brief Description"
-                                        required
-                                        rows={4}
-                                        className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors resize-none"
-                                    ></textarea>
+                                    <div>
+                                        <label htmlFor="companyName" className="sr-only">Company Name</label>
+                                        <input
+                                            id="companyName"
+                                            type="text"
+                                            name="companyName"
+                                            placeholder="Company Name"
+                                            className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="name" className="sr-only">Your Name</label>
+                                        <input
+                                            id="name"
+                                            type="text"
+                                            name="name"
+                                            placeholder="Your Name"
+                                            required
+                                            className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="email" className="sr-only">Email Address</label>
+                                        <input
+                                            id="email"
+                                            type="email"
+                                            name="email"
+                                            placeholder="Email Address"
+                                            required
+                                            className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="budget" className="sr-only">Budget Range</label>
+                                        <select
+                                            id="budget"
+                                            name="budget"
+                                            required
+                                            aria-label="Budget Range"
+                                            className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors appearance-none"
+                                        >
+                                            <option value="" disabled selected>Budget Range</option>
+                                            <option value="25K-80K">KSh 25K–80K</option>
+                                            <option value="80K-175K">KSh 80K–175K</option>
+                                            <option value="175K-500K">KSh 175K–500K</option>
+                                            <option value="500K+">KSh 500K+</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="message" className="sr-only">Message / Brief Description</label>
+                                        <textarea
+                                            id="message"
+                                            name="message"
+                                            placeholder="Message / Brief Description"
+                                            required
+                                            rows={4}
+                                            className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors resize-none"
+                                        ></textarea>
+                                    </div>
 
                                     {status === "error" && (
                                         <div className="text-red-600 font-medium text-sm">There was an error sending your message. Please try again.</div>

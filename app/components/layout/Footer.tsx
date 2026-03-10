@@ -57,11 +57,17 @@ export function Footer() {
                 <div className="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4 font-sans text-sm text-gray">
                     <div>&copy; {currentYear} ClipGanji. All rights reserved.</div>
                     <div className="flex gap-4">
-                        <span>TikTok</span>
+                        <span className="hover:text-white transition-colors cursor-pointer">
+                            <span className="sr-only">Follow us on </span>TikTok
+                        </span>
                         <span>&middot;</span>
-                        <span>Instagram</span>
+                        <span className="hover:text-white transition-colors cursor-pointer">
+                            <span className="sr-only">Follow us on </span>Instagram
+                        </span>
                         <span>&middot;</span>
-                        <span>YouTube</span>
+                        <span className="hover:text-white transition-colors cursor-pointer">
+                            <span className="sr-only">Follow us on </span>YouTube
+                        </span>
                     </div>
                 </div>
             </div>

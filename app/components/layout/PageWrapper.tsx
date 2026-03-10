@@ -9,7 +9,7 @@ export function PageWrapper({ children }: { children: ReactNode }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative min-h-screen"
+            className="relative min-h-screen will-change-[opacity]"
         >
             <div className="grain" />
             {children}

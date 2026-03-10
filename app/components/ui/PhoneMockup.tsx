@@ -7,7 +7,7 @@ import Image from "next/image"
 export function PhoneMockup() {
     return (
         <motion.div
-            className="relative w-full max-w-[320px] mx-auto aspect-[9/16] bg-black rounded-[2rem] border-4 border-border overflow-hidden shadow-2xl"
+            className="relative w-full max-w-[320px] mx-auto aspect-[9/16] bg-black rounded-[2rem] border-4 border-border overflow-hidden shadow-2xl will-change-transform"
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >

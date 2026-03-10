@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Anton, DM_Sans, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const anton = Anton({
@@ -44,6 +46,8 @@ export default function RootLayout({
       >
         <div className="grain" />
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
