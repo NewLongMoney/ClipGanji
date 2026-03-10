@@ -39,6 +39,9 @@ export function Footer() {
                     <div className="flex flex-col gap-4">
                         <h4 className="font-mono text-white text-sm tracking-widest uppercase mb-2">Contact</h4>
                         <div className="font-sans text-gray-light">
+                            <a href="tel:0702005560" className="hover:text-gold transition-colors">0702 005 560</a>
+                        </div>
+                        <div className="font-sans text-gray-light">
                             <a href="tel:0704096417" className="hover:text-gold transition-colors">0704 096 417</a>
                         </div>
                         <div className="font-sans text-gray-light">
