@@ -1,5 +1,4 @@
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/app/lib/utils"
 
@@ -37,13 +36,7 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, asChild = false, ...props }, ref) => {
-        // If asChild is false, we try to see if it's meant to be an anchor by checking href, but standard radix implementation implies using Slot.
-        // For simplicity without radix-ui/react-slot dependency right now, let's use a standard button or a styled standard element if needed.
-        // Actually, installed clsx but not class-variance-authority or radix-ui yet. Let's do a simpler implementation since they weren't explicitly requested.
-
-        // Fallback simple native implementations:
-        const baseClass = buttonVariants({ variant, size, className })
+    ({ className, variant, size, ...props }, ref) => {
         return (
             <button
                 className={cn(buttonVariants({ variant, size, className }))}

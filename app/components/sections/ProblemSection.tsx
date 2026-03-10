@@ -34,7 +34,7 @@ export function ProblemSection() {
                         </motion.h2>
 
                         <motion.div variants={fadeUp} className="flex flex-col gap-4 font-sans text-lg text-gray-light leading-relaxed">
-                            <p>TV can't prove who watched.</p>
+                            <p>TV can&apos;t prove who watched.</p>
                             <p>Influencer deals are legally complicated.</p>
                             <p>Paid social gets blocked or scrolled past.</p>
                             <p>Billboards have no ROI data.</p>

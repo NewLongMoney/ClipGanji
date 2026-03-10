@@ -8,32 +8,16 @@ export function PhoneMockup() {
     return (
         <motion.div
             className="relative w-full max-w-[320px] mx-auto aspect-[9/16] bg-black rounded-[2rem] border-4 border-border overflow-hidden shadow-2xl"
-            variants={float}
-            animate="animate"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
             {/* Fake Video Content Area */}
             <div className="absolute inset-0 bg-ink" />
 
-            {/* Brand Logo Bug */}
-            <div className="absolute top-4 right-4 z-20">
-                <div className="bg-gold text-black font-anton text-sm px-3 py-1 rounded-sm shadow-lg border border-gold-dim">
-                    BRAND LOGO
-                </div>
-
-                {/* Glow arrow annotation (CSS only for now, could use SVG) */}
-                <div className="absolute right-full top-1/2 -translate-y-1/2 mr-4 hidden md:flex items-center w-[150px]">
-                    <span className="font-mono text-green text-xs whitespace-nowrap mr-2">
-                        Your logo. Always visible.
-                    </span>
-                    <div className="h-[1px] bg-green flex-grow relative">
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 border-t border-r border-green rotate-45" />
-                    </div>
-                </div>
-            </div>
 
             {/* Fake UI Overlay */}
-            <div className="absolute inset-x-0 bottom-0 p-4 pb-10 bg-gradient-to-t from-black/95 via-black/50 to-transparent z-10">
-                <div className="flex flex-col items-center w-full mb-6">
+            <div className="absolute inset-x-0 bottom-0 p-4 pb-12 bg-gradient-to-t from-black/95 via-black/50 to-transparent z-10">
+                <div className="flex flex-col items-center w-full mb-8">
                     {/* Centered Brand Logo in Lower Third */}
                     <div className="w-1/2 max-w-[140px] opacity-90 filter drop-shadow-[0_0_12px_rgba(0,0,0,0.6)]">
                         <img
@@ -50,7 +34,7 @@ export function PhoneMockup() {
                             @clipganji_creator
                         </div>
                         <div className="font-sans text-xs text-white/80 line-clamp-2">
-                            Wait until the end 🤯 This is why we created the best network in Kenya. Let's go! 🚀
+                            Wait until the end 🤯 This is why we created the best network in Kenya. Let&apos;s go! 🚀
                         </div>
                     </div>
 

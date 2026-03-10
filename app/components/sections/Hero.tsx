@@ -16,9 +16,9 @@ export function Hero() {
         }
     }
 
-    const itemVariants = {
+    const itemVariants: any = {
         hidden: { opacity: 0, y: 30 },
-        show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] } }
+        show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
     }
 
     return (
@@ -56,7 +56,7 @@ export function Hero() {
                     initial="hidden"
                     animate="show"
                 >
-                    Kenya's first short-form video advertising network.<br className="hidden md:block" />
+                    Kenya&apos;s first short-form video advertising network.<br className="hidden md:block" />
                     10+ creators. TikTok, Reels, and Shorts.<br className="hidden md:block" />
                     Campaigns live in 72 hours.
                 </motion.p>

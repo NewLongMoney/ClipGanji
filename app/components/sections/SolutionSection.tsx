@@ -29,7 +29,7 @@ export function SolutionSection() {
                         </h2>
 
                         <p className="font-sans text-lg md:text-xl text-gray-light max-w-2xl mx-auto leading-relaxed">
-                            We don't run ads alongside content.<br className="hidden md:block" />
+                            We don&apos;t run ads alongside content.<br className="hidden md:block" />
                             We embed your brand directly into the clip itself —<br className="hidden md:block" />
                             as a persistent logo bug in the corner of every frame.<br />
                             <span className="text-white font-medium mt-4 block">No ad server. No overlay. No skip button.</span>

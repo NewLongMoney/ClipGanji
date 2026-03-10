@@ -14,7 +14,7 @@ export function Footer() {
                             <span className="font-anton text-4xl text-green">GANJI</span>
                         </Link>
                         <p className="font-sans text-gray-light max-w-xs leading-relaxed">
-                            Kenya's short-form video advertising network. Your brand inside every clip.
+                            Kenya&apos;s short-form video advertising network. Your brand inside every clip.
                         </p>
                     </div>
 
