@@ -1,19 +1,18 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: Request) {
-    try {
-        const { companyName, name, email, budget, message } = await request.json();
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  try {
+    const { companyName, name, email, budget, message } = await request.json();
 
-        // Send to ClipGanji
-        await resend.emails.send({
-            from: 'ClipGanji <onboarding@resend.dev>',
-            to: ['clipganji@gmail.com'],
-            subject: `New Campaign Brief from ${companyName}`,
-            replyTo: email,
-            html: `
+    // Send to ClipGanji
+    await resend.emails.send({
+      from: 'ClipGanji <onboarding@resend.dev>',
+      to: ['clipganji@gmail.com'],
+      subject: `New Campaign Brief from ${companyName}`,
+      replyTo: email,
+      html: `
         <div style="font-family: sans-serif; padding: 20px; color: #060809;">
           <h2 style="color: #00C853;">New Campaign Brief</h2>
           <p><strong>Company:</strong> ${companyName}</p>
@@ -24,14 +23,14 @@ export async function POST(request: Request) {
           <div style="background: #f2f2f2; padding: 15px; border-radius: 4px;">${message}</div>
         </div>
       `,
-        });
+    });
 
-        // Send confirmation to User
-        await resend.emails.send({
-            from: 'ClipGanji <onboarding@resend.dev>',
-            to: [email],
-            subject: `We've received your brief - ClipGanji`,
-            html: `
+    // Send confirmation to User
+    await resend.emails.send({
+      from: 'ClipGanji <onboarding@resend.dev>',
+      to: [email],
+      subject: `We've received your brief - ClipGanji`,
+      html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #1E2428; border-radius: 8px; overflow: hidden;">
           <div style="background: #060809; padding: 30px; text-align: center;">
             <h1 style="color: #FFFFFF; font-family: sans-serif; font-weight: bold; letter-spacing: 2px; margin: 0; text-transform: uppercase;">
@@ -55,10 +54,10 @@ export async function POST(request: Request) {
           </div>
         </div>
       `,
-        });
+    });
 
-        return NextResponse.json({ success: true });
-    } catch (error) {
-        return NextResponse.json({ error });
-    }
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json({ error });
+  }
 }
