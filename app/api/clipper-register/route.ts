@@ -1,6 +1,5 @@
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
   try {
@@ -8,13 +7,22 @@ export async function POST(req: Request) {
     
     // Basic validation
     if (!body.fullName || !body.phone || !body.email || !body.county || !body.audienceDescription || !body.bestClipUrl || !body.payoutMethod) {
-      return Response.json({ success: false, error: 'Missing required fields' }, { status: 400 })
+      return NextResponse.json({ success: false, error: 'Missing required fields' }, { status: 400 })
     }
 
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'clipganji@gmail.com',
+        pass: 'iubnbigigmosavtu',
+      },
+    });
+
     // Send notification to ClipGanji
-    const data = await resend.emails.send({
-      from: 'ClipGanji Network <onboarding@resend.dev>',
+    const mailOptions = {
+      from: 'clipganji@gmail.com',
       to: 'clipganji@gmail.com',
+      replyTo: body.email,
       subject: `New Clipper Application — ${body.fullName}`,
       html: `
         <h2>New Clipper Application</h2>
@@ -43,7 +51,7 @@ export async function POST(req: Request) {
           : `<p><strong>Bank Name:</strong> ${body.bankName}</p><p><strong>Account Number:</strong> ${body.accountNumber}</p>`
         }
       `
-    })
+    };
 
     const userHtml = `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #000; color: #fff; padding: 40px; border-radius: 8px;">
@@ -65,17 +73,21 @@ export async function POST(req: Request) {
     `;
 
     // Send confirmation to the applicant
-    await resend.emails.send({
-      from: 'ClipGanji Network <onboarding@resend.dev>',
+    const userMailOptions = {
+      from: 'ClipGanji Network <clipganji@gmail.com>',
       to: body.email,
       subject: 'Application Received — ClipGanji',
       html: userHtml
-    });
+    };
 
-    return Response.json({ success: true, data })
+    const info = await transporter.sendMail(mailOptions);
+    await transporter.sendMail(userMailOptions);
+
+    return NextResponse.json({ success: true, data: info })
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    console.error("Resend error:", errorMessage);
-    return Response.json({ success: false, error: errorMessage }, { status: 500 })
+    console.error("Nodemailer error:", errorMessage);
+    return NextResponse.json({ success: false, error: errorMessage }, { status: 500 })
   }
 }
+
