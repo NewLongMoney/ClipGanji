@@ -39,7 +39,7 @@ export function PhoneMockup() {
                             @clipganji_creator
                         </div>
                         <div className="font-sans text-xs text-white/80 line-clamp-2">
-                            Wait until the end 🤯 This is why we created the best network in Kenya. Let's go! 🚀
+                            Wait until the end 🤯 This is why we created the best network in Kenya. Let&apos;s go! 🚀
                         </div>
                     </div>
 

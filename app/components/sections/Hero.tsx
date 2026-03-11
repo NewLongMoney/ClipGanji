@@ -56,7 +56,7 @@ export function Hero() {
                     initial="hidden"
                     animate="show"
                 >
-                    Kenya's first short-form video advertising network.<br className="hidden md:block" />
+                    Kenya&apos;s first short-form video advertising network.<br className="hidden md:block" />
                     10+ creators. TikTok, Reels, and Shorts.<br className="hidden md:block" />
                     Campaigns live in 72 hours.
                 </motion.p>

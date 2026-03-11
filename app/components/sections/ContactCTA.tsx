@@ -29,7 +29,7 @@ export function ContactCTA() {
 
             // We set success immediately as the email client is now handled by the user
             setStatus("success")
-        } catch (err) {
+        } catch {
             setStatus("error")
         }
     }
@@ -78,7 +78,7 @@ export function ContactCTA() {
                                     </svg>
                                 </div>
                                 <h3 className="font-anton text-4xl uppercase mb-4">Brief Received</h3>
-                                <p className="font-sans font-medium text-lg">We'll be in touch within 24 hours.</p>
+                                <p className="font-sans font-medium text-lg">We&apos;ll be in touch within 24 hours.</p>
                             </div>
                         ) : (
                             <>
