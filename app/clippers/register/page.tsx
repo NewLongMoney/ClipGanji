@@ -1,19 +1,29 @@
-"use client"
-
-import { useState } from "react"
+'use client'
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle2 } from "lucide-react"
+import { CheckCircle2, AlertCircle } from "lucide-react"
 import { PageWrapper } from "@/app/components/layout/PageWrapper"
 import { Navbar } from "@/app/components/layout/Navbar"
 import { Footer } from "@/app/components/layout/Footer"
 import { Button } from "@/app/components/ui/Button"
 import Link from "next/link"
 import { cn } from "@/app/lib/utils"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 export default function ClipperRegister() {
+    const { data: session, status: authStatus } = useSession()
+    const router = useRouter()
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
-    const [payoutMethod, setPayoutMethod] = useState<'M-Pesa' | 'Bank Transfer'>('M-Pesa')
+    const [errorMessage, setErrorMessage] = useState('')
+    const [payoutMethod, setPayoutMethod] = useState<'mpesa' | 'bank'>('mpesa')
     const [contentTypes, setContentTypes] = useState<string[]>([])
+
+    useEffect(() => {
+        if (authStatus === 'unauthenticated') {
+            router.push('/clippers/login?callbackUrl=/clippers/register')
+        }
+    }, [authStatus, router])
 
     const toggleType = (type: string) => {
         setContentTypes(prev => 
@@ -23,36 +33,28 @@ export default function ClipperRegister() {
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
+        if (!session?.user?.id) {
+            router.push('/clippers/login')
+            return
+        }
+
         setStatus('submitting')
+        setErrorMessage('')
 
         const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries(formData.entries())
 
-        let audienceScreenshotBase64 = '';
-        const file = formData.get('audienceScreenshot') as File | null;
-        if (file && file.size > 0) {
-            try {
-                audienceScreenshotBase64 = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = () => resolve(reader.result as string);
-                    reader.onerror = error => reject(error);
-                });
-            } catch (err) {
-                console.error("Failed to read file", err);
-            }
-        }
-        
-        // Add array data manually since FormData handles multiple checkboxes strangely
         const payload = {
             ...data,
             contentTypes,
             payoutMethod,
-            audienceScreenshotBase64
+            // Map form names to prisma names if they differ
+            postFrequency: data.postingFrequency,
+            bankAccount: data.bankAccount || data.accountNumber,
         }
 
         try {
-            const res = await fetch('/api/clipper-register', {
+            const res = await fetch('/api/clipper/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -62,14 +64,17 @@ export default function ClipperRegister() {
 
             if (res.ok && result.success) {
                 setStatus('success')
+                // Redirect to dashboard after 2 seconds
+                setTimeout(() => router.push('/clippers/dashboard'), 2000)
             } else {
                 throw new Error(result.error || 'Failed to submit application')
             }
         } catch (err) {
             console.error(err)
             setStatus('error')
-            // Revert back so they can try again
-            setTimeout(() => setStatus('idle'), 3000)
+            setErrorMessage(err instanceof Error ? err.message : 'There was a problem submitting your application. Please try again.')
+            // Revert back so they can try again after a delay
+            setTimeout(() => setStatus('idle'), 5000)
         }
     }
 
@@ -133,7 +138,7 @@ export default function ClipperRegister() {
                                     
                                     <div>
                                         <label className="block font-sans text-sm text-gray-light mb-2">Full Name*</label>
-                                        <input required name="fullName" type="text" className="w-full bg-[#141414] border border-border focus:border-green text-white px-4 py-3 rounded-md outline-none transition-colors" />
+                                        <input required name="fullName" type="text" defaultValue={session?.user?.name || ''} className="w-full bg-[#141414] border border-border focus:border-green text-white px-4 py-3 rounded-md outline-none transition-colors" />
                                     </div>
                                     
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -143,7 +148,7 @@ export default function ClipperRegister() {
                                         </div>
                                         <div>
                                             <label className="block font-sans text-sm text-gray-light mb-2">Email Address*</label>
-                                            <input required name="email" type="email" className="w-full bg-[#141414] border border-border focus:border-green text-white px-4 py-3 rounded-md outline-none transition-colors" />
+                                            <input required name="email" type="email" defaultValue={session?.user?.email || ''} className="w-full bg-[#141414] border border-border focus:border-green text-white px-4 py-3 rounded-md outline-none transition-colors" />
                                         </div>
                                     </div>
 
@@ -264,19 +269,19 @@ export default function ClipperRegister() {
                                     <div>
                                         <label className="block font-sans text-sm text-gray-light mb-2">Preferred Payout Method*</label>
                                         <div className="flex gap-4">
-                                            <button type="button" onClick={() => setPayoutMethod('M-Pesa')} className={cn("flex-1 py-3 border rounded-md font-sans text-sm transition-colors", payoutMethod === 'M-Pesa' ? "border-green bg-green/10 text-white" : "border-border bg-[#141414] text-gray-light hover:border-gray")}>M-Pesa</button>
-                                            <button type="button" onClick={() => setPayoutMethod('Bank Transfer')} className={cn("flex-1 py-3 border rounded-md font-sans text-sm transition-colors", payoutMethod === 'Bank Transfer' ? "border-green bg-green/10 text-white" : "border-border bg-[#141414] text-gray-light hover:border-gray")}>Bank Transfer</button>
+                                            <button type="button" onClick={() => setPayoutMethod('mpesa')} className={cn("flex-1 py-3 border rounded-md font-sans text-sm transition-colors", payoutMethod === 'mpesa' ? "border-green bg-green/10 text-white" : "border-border bg-[#141414] text-gray-light hover:border-gray")}>M-Pesa</button>
+                                            <button type="button" onClick={() => setPayoutMethod('bank')} className={cn("flex-1 py-3 border rounded-md font-sans text-sm transition-colors", payoutMethod === 'bank' ? "border-green bg-green/10 text-white" : "border-border bg-[#141414] text-gray-light hover:border-gray")}>Bank Transfer</button>
                                         </div>
                                     </div>
 
                                     <AnimatePresence mode="popLayout">
-                                        {payoutMethod === 'M-Pesa' && (
+                                        {payoutMethod === 'mpesa' && (
                                             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
                                                 <label className="block font-sans text-sm text-gray-light mb-2">M-Pesa Number</label>
                                                 <input required name="mpesaNumber" type="tel" className="w-full bg-[#141414] border border-border focus:border-green text-white px-4 py-3 rounded-md outline-none transition-colors" />
                                             </motion.div>
                                         )}
-                                        {payoutMethod === 'Bank Transfer' && (
+                                        {payoutMethod === 'bank' && (
                                             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden flex flex-col gap-6">
                                                 <div>
                                                     <label className="block font-sans text-sm text-gray-light mb-2">Bank Name</label>
@@ -284,7 +289,7 @@ export default function ClipperRegister() {
                                                 </div>
                                                 <div>
                                                     <label className="block font-sans text-sm text-gray-light mb-2">Account Number</label>
-                                                    <input required name="accountNumber" type="text" className="w-full bg-[#141414] border border-border focus:border-green text-white px-4 py-3 rounded-md outline-none transition-colors" />
+                                                    <input required name="bankAccount" type="text" className="w-full bg-[#141414] border border-border focus:border-green text-white px-4 py-3 rounded-md outline-none transition-colors" />
                                                 </div>
                                             </motion.div>
                                         )}
@@ -326,8 +331,9 @@ export default function ClipperRegister() {
                                 </section>
 
                                 {status === 'error' && (
-                                    <div className="bg-red-500/10 border border-red-500/50 text-red-500 font-sans text-sm p-4 rounded-md text-center">
-                                        There was a problem submitting your application. Please try again.
+                                    <div className="bg-red-500/10 border border-red-500/50 text-red-500 font-sans text-sm p-4 rounded-md text-center flex items-center justify-center gap-2">
+                                        <AlertCircle className="w-4 h-4" />
+                                        {errorMessage}
                                     </div>
                                 )}
 

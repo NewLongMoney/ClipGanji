@@ -1,21 +1,72 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { PageWrapper } from "@/app/components/layout/PageWrapper"
 import { Navbar } from "@/app/components/layout/Navbar"
 import { Footer } from "@/app/components/layout/Footer"
-import { campaigns as defaultCampaigns } from "@/app/../data/campaigns"
-import { CampaignCard } from "@/app/components/ui/CampaignCard"
+import { campaigns as staticCampaigns } from "@/app/../data/campaigns"
+import { CampaignCard, Campaign } from "@/app/components/ui/CampaignCard"
 import { cn } from "@/app/lib/utils"
+
+function mapDbCampaign(c: {
+    id: string;
+    brandPublic: string;
+    category: string;
+    accentColor: string;
+    headline: string;
+    brief: string;
+    format: 'logo-bug' | 'video-placement' | 'both';
+    platforms: ('tiktok' | 'reels' | 'shorts')[];
+    payPer1000Views: number;
+    bonusThreshold?: number;
+    bonusAmount?: number;
+    endDate: string;
+    spotsRemaining?: number;
+    status: string;
+    isEnrolled?: boolean;
+}): Campaign {
+    return {
+        id: c.id,
+        brand: c.brandPublic,
+        category: c.category,
+        logoColor: c.accentColor,
+        headline: c.headline,
+        brief: c.brief,
+        format: c.format,
+        platforms: c.platforms,
+        payPerThousandViews: c.payPer1000Views,
+        bonusThreshold: c.bonusThreshold || 50000,
+        bonusAmount: c.bonusAmount || 1000,
+        deadline: c.endDate ? new Date(c.endDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Rolling',
+        spotsRemaining: c.spotsRemaining || 10,
+        status: (c.status === 'active' ? 'open' : c.status) as 'open' | 'filling' | 'full',
+        isEnrolled: c.isEnrolled,
+    }
+}
 
 export default function CampaignsBoard() {
     const [filter, setFilter] = useState("All")
+    const [campaigns, setCampaigns] = useState<Campaign[]>(staticCampaigns)
+    const [loading, setLoading] = useState(true)
     const categories = ["All", "Betting", "Fintech", "Telco", "Entertainment"]
 
+    useEffect(() => {
+        fetch('/api/clipper/campaigns')
+            .then(r => r.json())
+            .then(data => {
+                if (Array.isArray(data) && data.length > 0) {
+                    setCampaigns(data.map(mapDbCampaign))
+                }
+                // If DB has no campaigns yet, keep static fallback
+                setLoading(false)
+            })
+            .catch(() => setLoading(false))
+    }, [])
+
     const filteredCampaigns = filter === "All" 
-        ? defaultCampaigns 
-        : defaultCampaigns.filter(c => c.category === filter)
+        ? campaigns 
+        : campaigns.filter(c => c.category === filter)
 
     return (
         <PageWrapper>
@@ -55,35 +106,41 @@ export default function CampaignsBoard() {
                         ))}
                     </div>
 
-                    {/* Card Grid */}
-                    <motion.div 
-                        layout
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-                    >
-                        <AnimatePresence>
-                            {filteredCampaigns.map(campaign => (
-                                <motion.div
-                                    key={campaign.id}
-                                    layout
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
-                                    transition={{ duration: 0.3 }}
-                                >
-                                    <CampaignCard campaign={campaign} />
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
-                        
-                        {filteredCampaigns.length === 0 && (
-                            <div className="col-span-full py-16 text-center border border-dashed border-border rounded-xl">
-                                <p className="font-sans text-gray-light text-lg">
-                                    No open campaigns for this category right now.<br/>
-                                    Check back soon or register to get notified!
-                                </p>
-                            </div>
-                        )}
-                    </motion.div>
+                    {loading ? (
+                        <div className="flex justify-center py-20">
+                            <div className="w-8 h-8 border-2 border-green border-t-transparent rounded-full animate-spin" />
+                        </div>
+                    ) : (
+                        /* Card Grid */
+                        <motion.div 
+                            layout
+                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                        >
+                            <AnimatePresence>
+                                {filteredCampaigns.map((campaign: Campaign) => (
+                                    <motion.div
+                                        key={campaign.id}
+                                        layout
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.9 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        <CampaignCard campaign={campaign} />
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
+                            
+                            {filteredCampaigns.length === 0 && (
+                                <div className="col-span-full py-16 text-center border border-dashed border-border rounded-xl">
+                                    <p className="font-sans text-gray-light text-lg">
+                                        No open campaigns for this category right now.<br/>
+                                        Check back soon or register to get notified!
+                                    </p>
+                                </div>
+                            )}
+                        </motion.div>
+                    )}
                 </div>
             </main>
             <Footer />

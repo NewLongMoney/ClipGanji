@@ -1,59 +1,16 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { cn } from "@/app/lib/utils"
 import {
   LayoutDashboard, Megaphone, Upload, Wallet,
   Settings, LogOut, TrendingUp, Eye, CheckCircle,
   Clock, AlertCircle, ChevronRight, Bell
 } from 'lucide-react'
-
-// ── MOCK DATA ──────────────────────────────────────────────────────────
-const mockStats = {
-  totalEarnings: 14750,
-  weeklyViews: 48200,
-  activeSubmissions: 3,
-  pendingApproval: 1,
-  weeklyEarningsChange: +12,
-}
-
-const mockActiveCampaigns = [
-  {
-    id: '001',
-    brand: 'Brand Partner A',
-    category: 'Betting',
-    accentColor: '#00C853',
-    status: 'active',
-    deadline: 'Mar 30, 2026',
-    payPer1k: 300,
-    myViews: 22400,
-    myEarnings: 6720,
-    clipsSubmitted: 8,
-    clipsApproved: 6,
-  },
-  {
-    id: '002',
-    brand: 'Brand Partner B',
-    category: 'Fintech',
-    accentColor: '#F5B800',
-    status: 'active',
-    deadline: 'Apr 1, 2026',
-    payPer1k: 500,
-    myViews: 16100,
-    myEarnings: 8050,
-    clipsSubmitted: 4,
-    clipsApproved: 4,
-  },
-]
-
-const mockRecentSubmissions = [
-  { id: 's1', campaign: 'Brand Partner A', platform: 'TikTok', views: 8400, status: 'approved', earnings: 2520, submittedAt: '2h ago' },
-  { id: 's2', campaign: 'Brand Partner B', platform: 'Instagram Reels', views: 5100, status: 'approved', earnings: 2550, submittedAt: '5h ago' },
-  { id: 's3', campaign: 'Brand Partner A', platform: 'TikTok', views: 3200, status: 'pending', earnings: null, submittedAt: '1d ago' },
-  { id: 's4', campaign: 'Brand Partner A', platform: 'YouTube Shorts', views: 2800, status: 'approved', earnings: 840, submittedAt: '1d ago' },
-  { id: 's5', campaign: 'Brand Partner B', platform: 'TikTok', views: 11000, status: 'approved', earnings: 5500, submittedAt: '2d ago' },
-]
+import { DashboardData, ActiveCampaign, RecentSubmission } from '@/app/types/dashboard'
+import Image from 'next/image'
 
 // ── SIDEBAR NAV ITEMS ──────────────────────────────────────────────────
 const navItems = [
@@ -77,8 +34,8 @@ function StatusBadge({ status }: { status: string }) {
     rejected: <AlertCircle size={11} />,
   }
   return (
-    <span className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${styles[status as keyof typeof styles]}`}>
-      {icons[status as keyof typeof icons]}
+    <span className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${styles[status as keyof typeof styles] || styles.pending}`}>
+      {icons[status as keyof typeof icons] || icons.pending}
       {status}
     </span>
   )
@@ -95,20 +52,39 @@ function PlatformBadge({ platform }: { platform: string }) {
 
 // ── MAIN DASHBOARD ─────────────────────────────────────────────────────
 export default function ClipperDashboard() {
-  const { data: session, status } = useSession()
+  const { data: session, status: authStatus } = useSession()
   const router = useRouter()
+  const [dashData, setDashData] = useState<DashboardData | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (status === 'unauthenticated') router.push('/clippers/login')
-  }, [status, router])
+    if (authStatus === 'unauthenticated') router.push('/clippers/login')
+  }, [authStatus, router])
 
-  if (status === 'loading') {
+  useEffect(() => {
+    if (authStatus === 'authenticated') {
+      fetch('/api/clipper/dashboard')
+        .then(r => r.json())
+        .then(data => {
+          setDashData(data)
+          setLoading(false)
+        })
+        .catch(() => setLoading(false))
+    }
+  }, [authStatus])
+
+  if (loading || authStatus === 'loading') {
     return (
       <div className="min-h-screen bg-[#060809] flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-[#00C853] border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
+
+  const stats = dashData?.stats
+  const activeCampaigns = dashData?.activeCampaigns || []
+  const recentSubmissions = dashData?.recentSubmissions || []
+  const profile = dashData?.profile
 
   return (
     <div className="min-h-screen bg-[#060809] flex">
@@ -143,8 +119,7 @@ export default function ClipperDashboard() {
         <div className="p-4 border-t border-[#1E2428]">
           <div className="flex items-center gap-3 mb-3">
             {session?.user?.image && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={session.user.image} alt="" className="w-8 h-8 rounded-full border border-[#1E2428]" />
+              <Image src={session.user.image} alt="Profile" width={32} height={32} className="w-8 h-8 rounded-full border border-[#1E2428]" />
             )}
             <div className="flex-1 min-w-0">
               <p className="text-white text-sm font-medium truncate">{session?.user?.name}</p>
@@ -182,8 +157,7 @@ export default function ClipperDashboard() {
               </button>
               {/* Avatar */}
               {session?.user?.image && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={session.user.image} alt="" className="w-8 h-8 rounded-full border border-[#1E2428] lg:hidden" />
+                <Image src={session.user.image} alt="Profile" width={32} height={32} className="w-8 h-8 rounded-full border border-[#1E2428] lg:hidden" />
               )}
             </div>
           </div>
@@ -202,11 +176,11 @@ export default function ClipperDashboard() {
             <div>
               <p className="text-[#8A949C] text-xs font-mono mb-1">{"// TOTAL EARNINGS THIS WEEK"}</p>
               <p className="font-anton text-4xl text-white">
-                KSh {mockStats.totalEarnings.toLocaleString()}
+                KSh {stats?.weeklyEarnings?.toLocaleString() || 0}
               </p>
-              <p className="text-[#00C853] text-sm mt-1 flex items-center gap-1">
-                <TrendingUp size={13} />
-                +{mockStats.weeklyEarningsChange}% from last week
+              <p className={cn("text-sm mt-1 flex items-center gap-1", (stats?.earningsChange ?? 0) >= 0 ? "text-[#00C853]" : "text-red-400")}>
+                <TrendingUp size={13} className={(stats?.earningsChange ?? 0) < 0 ? "rotate-180" : ""} />
+                {(stats?.earningsChange ?? 0) >= 0 ? '+' : ''}{stats?.earningsChange || 0}% from last week
               </p>
             </div>
             <div className="flex gap-3">
@@ -226,10 +200,10 @@ export default function ClipperDashboard() {
           {/* ── STATS GRID ────────────────────────────────────────── */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: 'Weekly Views', value: mockStats.weeklyViews.toLocaleString(), icon: Eye, color: '#00C853' },
-              { label: 'Active Campaigns', value: mockActiveCampaigns.length, icon: Megaphone, color: '#F5B800' },
-              { label: 'Clips Submitted', value: mockRecentSubmissions.length, icon: Upload, color: '#00C853' },
-              { label: 'Pending Review', value: mockStats.pendingApproval, icon: Clock, color: '#F5B800' },
+              { label: 'Weekly Views', value: stats?.weeklyViews?.toLocaleString() || 0, icon: Eye, color: '#00C853' },
+              { label: 'Active Campaigns', value: activeCampaigns.length, icon: Megaphone, color: '#F5B800' },
+              { label: 'Clips Submitted', value: stats?.totalSubmissions || 0, icon: Upload, color: '#00C853' },
+              { label: 'Pending Review', value: stats?.pendingCount || 0, icon: Clock, color: '#F5B800' },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -256,7 +230,7 @@ export default function ClipperDashboard() {
               </a>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
-              {mockActiveCampaigns.map((campaign, i) => (
+              {activeCampaigns.map((campaign: ActiveCampaign, i: number) => (
                 <motion.div
                   key={campaign.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -274,7 +248,7 @@ export default function ClipperDashboard() {
                         <span className="text-[10px] font-mono text-[#4A5259] uppercase">{campaign.category}</span>
                         <h3 className="font-anton text-white text-xl mt-0.5">{campaign.brand}</h3>
                       </div>
-                      <span className="text-[10px] font-mono text-[#4A5259]">Ends {campaign.deadline}</span>
+                      <span className="text-[10px] font-mono text-[#4A5259]">Ends {new Date(campaign.deadline).toLocaleDateString()}</span>
                     </div>
 
                     {/* Metrics row */}
@@ -291,9 +265,9 @@ export default function ClipperDashboard() {
                       </div>
                       <div className="bg-[#141414] rounded-lg p-2.5 text-center">
                         <p className="font-anton text-lg text-[#00C853]">
-                          {campaign.payPer1k * campaign.myViews / 1000 >= 1000
-                            ? `${(campaign.payPer1k * campaign.myViews / 1000000).toFixed(1)}K`
-                            : campaign.payPer1k * campaign.myViews / 1000}
+                          {campaign.myEarnings >= 1000
+                            ? `${(campaign.myEarnings / 1000).toFixed(1)}K`
+                            : campaign.myEarnings}
                         </p>
                         <p className="text-[#4A5259] text-[10px]">Earned KSh</p>
                       </div>
@@ -372,7 +346,7 @@ export default function ClipperDashboard() {
               </div>
 
               {/* Rows */}
-              {mockRecentSubmissions.map((sub, i) => (
+              {recentSubmissions.map((sub: RecentSubmission, i: number) => (
                 <motion.div
                   key={sub.id}
                   initial={{ opacity: 0 }}
@@ -415,15 +389,15 @@ export default function ClipperDashboard() {
             {/* This week */}
             <div className="bg-[#0E1214] border border-[#1E2428] rounded-xl p-5">
               <p className="text-[#4A5259] text-[10px] font-mono mb-1">THIS WEEK</p>
-              <p className="font-anton text-3xl text-white">KSh {mockStats.totalEarnings.toLocaleString()}</p>
-              <p className="text-[#00C853] text-xs mt-1 flex items-center gap-1">
-                <TrendingUp size={11} />
-                +{mockStats.weeklyEarningsChange}% vs last week
+              <p className="font-anton text-3xl text-white">KSh {stats?.weeklyEarnings?.toLocaleString() || 0}</p>
+              <p className={cn("text-xs mt-1 flex items-center gap-1", (stats?.earningsChange ?? 0) >= 0 ? "text-[#00C853]" : "text-red-400")}>
+                <TrendingUp size={11} className={(stats?.earningsChange ?? 0) < 0 ? "rotate-180" : ""} />
+                {(stats?.earningsChange ?? 0) >= 0 ? '+' : ''}{stats?.earningsChange || 0}% vs last week
               </p>
               <div className="mt-4 h-1 bg-[#141414] rounded-full overflow-hidden">
                 <div className="h-full w-3/5 bg-[#00C853] rounded-full" />
               </div>
-              <p className="text-[#4A5259] text-[10px] mt-1.5">60% of monthly average</p>
+              <p className="text-[#4A5259] text-[10px] mt-1.5">Weekly performance track</p>
             </div>
 
             {/* Payout info */}
@@ -444,15 +418,15 @@ export default function ClipperDashboard() {
             {/* All time */}
             <div className="bg-[#0E1214] border border-[#1E2428] rounded-xl p-5">
               <p className="text-[#4A5259] text-[10px] font-mono mb-1">ALL TIME EARNED</p>
-              <p className="font-anton text-3xl text-white">KSh 67,300</p>
-              <p className="text-[#4A5259] text-xs mt-1">Since Jan 2026</p>
+              <p className="font-anton text-3xl text-white">KSh {profile?.totalEarnings?.toLocaleString() || 0}</p>
+              <p className="text-[#4A5259] text-xs mt-1">Life-time stats</p>
               <div className="mt-4 flex items-center justify-between text-xs">
                 <span className="text-[#4A5259]">Total views</span>
-                <span className="text-white font-mono">224,000</span>
+                <span className="text-white font-mono">{profile?.totalViews?.toLocaleString() || 0}</span>
               </div>
               <div className="flex items-center justify-between text-xs mt-1.5">
-                <span className="text-[#4A5259]">Avg CPM earned</span>
-                <span className="text-[#00C853] font-mono">KSh 300</span>
+                <span className="text-[#4A5259]">Avg Earnings</span>
+                <span className="text-[#00C853] font-mono">KSh {(profile?.totalEarnings ? (profile.totalEarnings / ((profile.totalViews || 1) / 1000)) : 0).toFixed(0)}/1K</span>
               </div>
             </div>
           </div>

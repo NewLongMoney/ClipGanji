@@ -16,6 +16,7 @@ export interface Campaign {
     deadline: string
     spotsRemaining: number
     status: 'open' | 'filling' | 'full'
+    isEnrolled?: boolean
 }
 
 interface CampaignCardProps {
