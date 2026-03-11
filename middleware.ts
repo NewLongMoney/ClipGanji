@@ -25,21 +25,39 @@ export default withAuth(
       authorized: ({ token, req }) => {
         const path = req.nextUrl.pathname
         // Public clipper pages
+        // Public paths
         if (
+          path === '/' ||
+          path === '/contact' ||
           path === '/clippers' ||
           path === '/clippers/login' ||
-          path === '/clippers/campaigns' ||
+          path === '/api/contact' ||
           path.startsWith('/clippers/campaigns/')
         ) {
           return true
         }
-        // Everything else needs auth
-        return !!token
+
+        // Admin routes
+        if (path.startsWith('/api/admin')) {
+          // Additional check for admin secret is done in the route
+          return !!token
+        }
+
+        // Clipper routes
+        if (path.startsWith('/clippers') || path.startsWith('/api/clipper')) {
+          return !!token
+        }
+
+        return true
       },
     },
   }
 )
 
 export const config = {
-  matcher: ['/clippers/:path*'],
+  matcher: [
+    '/clippers/:path*',
+    '/api/clipper/:path*',
+    '/api/admin/:path*',
+  ],
 }

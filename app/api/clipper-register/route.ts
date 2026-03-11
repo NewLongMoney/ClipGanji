@@ -13,8 +13,8 @@ export async function POST(req: Request) {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'clipganji@gmail.com',
-        pass: 'iubnbigigmosavtu',
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
@@ -59,8 +59,8 @@ export async function POST(req: Request) {
     `;
 
     const mailOptions = {
-      from: 'clipganji@gmail.com',
-      to: 'clipganji@gmail.com',
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER,
       replyTo: body.email,
       subject: `New Clipper Application — ${body.fullName}`,
       html: adminHtml,
@@ -103,7 +103,7 @@ export async function POST(req: Request) {
 
     // Send confirmation to the applicant
     const userMailOptions = {
-      from: 'ClipGanji Network <clipganji@gmail.com>',
+      from: `ClipGanji Network <${process.env.EMAIL_USER}>`,
       to: body.email,
       subject: 'Application Received — ClipGanji',
       html: userHtml
