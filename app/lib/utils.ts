@@ -19,7 +19,7 @@ export const stagger = {
 }
 
 // Phone float
-export const float = {
+export const float: import("framer-motion").Variants = {
     animate: {
         y: [0, -12, 0],
         transition: { duration: 3, repeat: Infinity, ease: "easeInOut" }

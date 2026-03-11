@@ -14,21 +14,18 @@ export function ContactCTA() {
         const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries(formData.entries())
 
-        const subject = encodeURIComponent(`New Campaign Brief from ${data.companyName}`)
-        const body = encodeURIComponent(
-            `Company: ${data.companyName}\n` +
-            `Name: ${data.name}\n` +
-            `Email: ${data.email}\n` +
-            `Budget: ${data.budget}\n` +
-            `Message:\n${data.message}`
-        )
-
         try {
-            // Open user's email client
-            window.location.href = `mailto:clipganji@gmail.com?subject=${subject}&body=${body}`
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
 
-            // We set success immediately as the email client is now handled by the user
-            setStatus("success")
+            if (response.ok) {
+                setStatus("success")
+            } else {
+                setStatus("error")
+            }
         } catch {
             setStatus("error")
         }
