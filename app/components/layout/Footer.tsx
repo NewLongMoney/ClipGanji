@@ -10,7 +10,7 @@ export function Footer() {
                     {/* Column 1 */}
                     <div className="md:col-span-1">
                         <Link href="/" className="inline-flex items-center mb-6">
-                            <img src="/images/logo2.png" alt="ClipGanji Logo" className="h-14 md:h-20 w-auto object-contain hover:scale-105 transition-transform" />
+                            <img src="/images/logo2.png" alt="ClipGanji Logo" className="h-16 md:h-24 w-auto object-contain hover:scale-105 transition-transform" />
                         </Link>
                         <p className="font-sans text-gray-light max-w-xs leading-relaxed">
                             Kenya&apos;s short-form video advertising network. Your brand inside every clip.
@@ -22,7 +22,6 @@ export function Footer() {
                         <h4 className="font-mono text-white text-sm tracking-widest uppercase mb-2">For Brands</h4>
                         <Link href="/#how-it-works" className="font-sans text-gray-light hover:text-green transition-colors">How It Works</Link>
                         <Link href="/#formats" className="font-sans text-gray-light hover:text-green transition-colors">Ad Formats</Link>
-                        <Link href="/rates" className="font-sans text-gray-light hover:text-green transition-colors">Rates</Link>
                         <Link href="/weekly" className="font-sans text-gray-light hover:text-green transition-colors">Weekly Campaigns</Link>
                     </div>
 
@@ -32,20 +31,16 @@ export function Footer() {
                         <Link href="/clippers" className="font-sans text-gray-light hover:text-gold transition-colors">Earn Money</Link>
                         <Link href="/clippers/campaigns" className="font-sans text-gray-light hover:text-gold transition-colors">Open Campaigns</Link>
                         <Link href="/clippers/register" className="font-sans text-gray-light hover:text-gold transition-colors">Register</Link>
-                        <Link href="/clippers/dashboard" className="font-sans text-gray-light hover:text-gold transition-colors">Log In</Link>
                     </div>
 
                     {/* Column 4 */}
                     <div className="flex flex-col gap-4">
-                        <h4 className="font-mono text-white text-sm tracking-widest uppercase mb-2">WhatsApp Us</h4>
+                        <h4 className="font-mono text-white text-sm tracking-widest uppercase mb-2">Contact Us</h4>
                         <div className="font-sans text-gray-light">
-                            <a href="https://wa.me/254115336356?text=Hi%20ClipGanji!%20I'd%20like%20to%20start%20a%20brand%20campaign." target="_blank" rel="noopener noreferrer" className="hover:text-green transition-colors">Chat as a Brand</a>
+                            <a href="https://wa.me/254115336356?text=Hi%20ClipGanji!%20I'd%20like%20to%20start%20a%20brand%20campaign." target="_blank" rel="noopener noreferrer" className="hover:text-green transition-colors">+254 115 336 356</a>
                         </div>
                         <div className="font-sans text-gray-light">
-                            <a href="https://wa.me/254115336356?text=Hi%20ClipGanji!%20I'm%20interested%20in%20joining%20as%20a%20Clipper." target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">Chat as a Clipper</a>
-                        </div>
-                        <div className="font-sans text-gray-light">
-                            <span className="hover:text-green transition-colors cursor-pointer">@NewLongMoney</span>
+                            <a href="mailto:clipganji@gmail.com" className="hover:text-green transition-colors">clipganji@gmail.com</a>
                         </div>
                         <div className="font-sans text-gray-light mt-4">
                             Nairobi, Kenya

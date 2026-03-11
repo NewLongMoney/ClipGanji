@@ -82,10 +82,7 @@ export function Hero() {
                     initial="hidden"
                     animate="show"
                 >
-                    <Button size="lg" className="w-full sm:w-auto" asChild>
-                        <Link href="/rates">See Rates</Link>
-                    </Button>
-                    <Button variant="outline-white" size="lg" className="w-full sm:w-auto" asChild>
+                    <Button variant="filled-green" size="lg" className="w-full sm:w-auto" asChild>
                         <Link href="/contact">Book a Call</Link>
                     </Button>
                 </motion.div>

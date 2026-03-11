@@ -45,8 +45,11 @@ export default function RatesPage() {
                     <h1 className="font-anton text-5xl md:text-6xl lg:text-[72px] leading-[1.1] text-white uppercase mb-6">
                         WHAT YOUR <span className="text-gold">BUDGET BUYS</span>
                     </h1>
-                    <p className="font-sans text-gray-light text-lg md:text-xl leading-relaxed max-w-2xl mb-16">
+                    <p className="font-sans text-gray-light text-lg md:text-xl leading-relaxed max-w-2xl mb-4">
                         All campaigns are guaranteed to hit view targets. UTM-tracked. Geo-filtered to Kenya. Detailed reporting delivered within 48 hours of campaign completion.
+                    </p>
+                    <p className="font-sans text-gold text-lg md:text-xl font-medium leading-relaxed max-w-2xl mb-16">
+                        The rates for clippers are base rates and not always the same it may vary per campaign.
                     </p>
 
                     <div className="bg-card rounded-md border border-border p-8 mb-16 shadow-2xl">
@@ -59,15 +62,6 @@ export default function RatesPage() {
                                 All prices are exclusive of VAT.
                             </div>
                         </div>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row gap-6 mb-24 justify-center items-center">
-                        <a href="/downloads/ClipGanji_PitchDeck.pdf" target="_blank" rel="noopener noreferrer" className="bg-green text-black px-8 py-4 rounded-md font-anton text-2xl uppercase hover:bg-gold transition-colors min-w-[300px] text-center shadow-lg">
-                            Download Pitch Deck (PDF)
-                        </a>
-                        <a href="/downloads/ClipGanji_Rate_Card.docx" target="_blank" rel="noopener noreferrer" className="bg-ink border border-border text-white px-8 py-4 rounded-md font-anton text-2xl uppercase hover:border-gold hover:text-gold transition-colors min-w-[300px] text-center shadow-lg">
-                            Download Rate Card (DOCX)
-                        </a>
                     </div>
 
                     <div className="mb-16">

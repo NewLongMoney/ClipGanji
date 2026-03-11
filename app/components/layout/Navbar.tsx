@@ -21,7 +21,6 @@ export function Navbar() {
     const navLinks = [
         { name: "How It Works", href: "/#how-it-works" },
         { name: "Ad Formats", href: "/#formats" },
-        { name: "Rates", href: "/rates" },
         { name: "Contact", href: "/contact" },
     ]
 
@@ -34,7 +33,7 @@ export function Navbar() {
         >
             <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
                 <Link href="/" className="flex items-center group">
-                    <img src="/images/logo2.png" alt="ClipGanji Logo" className="h-10 md:h-14 w-auto object-contain transition-transform group-hover:scale-105" />
+                    <img src="/images/logo2.png" alt="ClipGanji Logo" className="h-16 md:h-24 w-auto object-contain transition-transform group-hover:scale-105" />
                 </Link>
 
                 {/* Desktop Nav */}

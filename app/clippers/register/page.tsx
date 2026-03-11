@@ -27,12 +27,28 @@ export default function ClipperRegister() {
 
         const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries(formData.entries())
+
+        let audienceScreenshotBase64 = '';
+        const file = formData.get('audienceScreenshot') as File | null;
+        if (file && file.size > 0) {
+            try {
+                audienceScreenshotBase64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result as string);
+                    reader.onerror = error => reject(error);
+                });
+            } catch (err) {
+                console.error("Failed to read file", err);
+            }
+        }
         
         // Add array data manually since FormData handles multiple checkboxes strangely
         const payload = {
             ...data,
             contentTypes,
-            payoutMethod
+            payoutMethod,
+            audienceScreenshotBase64
         }
 
         try {
@@ -229,8 +245,8 @@ export default function ClipperRegister() {
                                     </div>
 
                                     <div>
-                                        <label className="block font-sans text-sm text-gray-light mb-2">Describe your audience in one sentence*</label>
-                                        <textarea required name="audienceDescription" maxLength={200} placeholder='e.g. "Young Nairobi men aged 18–30 who follow football and betting"' className="w-full bg-[#141414] border border-border focus:border-green text-white px-4 py-3 rounded-md outline-none transition-colors resize-none h-24" />
+                                        <label className="block font-sans text-sm text-gray-light mb-2">Screenshot of Analytics Page (Stats & Demographics)*</label>
+                                        <input required name="audienceScreenshot" type="file" accept="image/*" className="w-full bg-[#141414] border border-border focus:border-green text-white px-4 py-3 rounded-md outline-none transition-colors" />
                                     </div>
 
                                     <div>
