@@ -1,7 +1,7 @@
 'use client'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import {
   LayoutDashboard, Megaphone, Upload, Wallet,
@@ -86,11 +86,6 @@ function StatusBadge({ status }: { status: string }) {
 
 // ── PLATFORM BADGE ─────────────────────────────────────────────────────
 function PlatformBadge({ platform }: { platform: string }) {
-  const colors: Record<string, string> = {
-    'TikTok': '#69C9D0',
-    'Instagram Reels': '#E1306C',
-    'YouTube Shorts': '#FF0000',
-  }
   return (
     <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#1E2428] text-[#8A949C]">
       {platform}
@@ -102,7 +97,6 @@ function PlatformBadge({ platform }: { platform: string }) {
 export default function ClipperDashboard() {
   const { data: session, status } = useSession()
   const router = useRouter()
-  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
     if (status === 'unauthenticated') router.push('/clippers/login')
@@ -128,7 +122,7 @@ export default function ClipperDashboard() {
             <span className="font-anton text-2xl text-white">CLIP</span>
             <span className="font-anton text-2xl text-[#00C853]">GANJI</span>
           </a>
-          <p className="text-[#4A5259] text-[10px] font-mono mt-1">// CLIPPER PORTAL</p>
+          <p className="text-[#4A5259] text-[10px] font-mono mt-1">{"// CLIPPER PORTAL"}</p>
         </div>
 
         {/* Nav */}
@@ -206,7 +200,7 @@ export default function ClipperDashboard() {
                        rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
           >
             <div>
-              <p className="text-[#8A949C] text-xs font-mono mb-1">// TOTAL EARNINGS THIS WEEK</p>
+              <p className="text-[#8A949C] text-xs font-mono mb-1">{"// TOTAL EARNINGS THIS WEEK"}</p>
               <p className="font-anton text-4xl text-white">
                 KSh {mockStats.totalEarnings.toLocaleString()}
               </p>

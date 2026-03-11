@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 
 export function Footer() {
     const currentYear = new Date().getFullYear()
@@ -10,7 +11,7 @@ export function Footer() {
                     {/* Column 1 */}
                     <div className="md:col-span-1">
                         <Link href="/" className="inline-flex items-center mb-6">
-                            <img src="/images/logo2.png" alt="ClipGanji Logo" className="h-16 md:h-24 w-auto object-contain hover:scale-105 transition-transform" />
+                            <Image src="/images/logo2.png" alt="ClipGanji Logo" width={150} height={100} className="h-16 md:h-24 w-auto object-contain hover:scale-105 transition-transform" />
                         </Link>
                         <p className="font-sans text-gray-light max-w-xs leading-relaxed">
                             Kenya&apos;s short-form video advertising network. Your brand inside every clip.

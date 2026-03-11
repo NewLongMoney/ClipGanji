@@ -33,7 +33,7 @@ export default function ClipperLogin() {
             <span className="font-anton text-4xl text-white">CLIP</span>
             <span className="font-anton text-4xl text-[#00C853]">GANJI</span>
           </a>
-          <p className="text-[#8A949C] text-sm mt-2 font-mono">// CLIPPER PORTAL</p>
+          <p className="text-[#8A949C] text-sm mt-2 font-mono">{"// CLIPPER PORTAL"}</p>
         </div>
 
         {/* Card */}
