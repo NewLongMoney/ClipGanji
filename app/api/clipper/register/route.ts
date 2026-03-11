@@ -23,6 +23,18 @@ export async function POST(req: Request) {
   }
 
   try {
+    // Ensure User record exists (NextAuth might not have created it yet in the new DB)
+    await prisma.user.upsert({
+      where: { id: session.user.id },
+      update: {},
+      create: {
+        id: session.user.id,
+        email: session.user.email,
+        name: session.user.name,
+        image: session.user.image,
+      },
+    })
+
     // Check if profile already exists
     const existing = await prisma.clipperProfile.findUnique({
       where: { userId: session.user.id },
