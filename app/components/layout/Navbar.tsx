@@ -12,7 +12,7 @@ export function Navbar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50)
+            setScrolled(window.scrollY > 60)
         }
         window.addEventListener("scroll", handleScroll)
         return () => window.removeEventListener("scroll", handleScroll)
@@ -26,16 +26,15 @@ export function Navbar() {
     ]
 
     return (
-        <header
+        <nav
             className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-                scrolled ? "bg-black/90 backdrop-blur-md border-b border-border py-4" : "bg-transparent py-6"
+                "fixed top-0 w-full z-50 transition-all duration-300",
+                scrolled ? "bg-black/95 backdrop-blur-md border-b border-border py-4" : "bg-transparent py-6"
             )}
         >
             <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
-                <Link href="/" className="flex items-center gap-1 group">
-                    <span className="font-anton text-3xl text-white group-hover:text-green transition-colors">CLIP</span>
-                    <span className="font-anton text-3xl text-green group-hover:text-gold transition-colors">GANJI</span>
+                <Link href="/" className="flex items-center group">
+                    <img src="/images/logo2.png" alt="ClipGanji Logo" className="h-10 md:h-14 w-auto object-contain transition-transform group-hover:scale-105" />
                 </Link>
 
                 {/* Desktop Nav */}
@@ -49,6 +48,10 @@ export function Navbar() {
                             {link.name}
                         </Link>
                     ))}
+                    <Link href="/clippers" className="flex items-center gap-1.5 text-green font-semibold">
+                        For Clippers
+                        <span className="bg-green text-black text-[10px] font-black px-1.5 py-0.5 rounded">EARN</span>
+                    </Link>
                     <Button variant="outline-white" size="sm" asChild>
                         <Link href="/contact">Book a Call</Link>
                     </Button>
@@ -65,7 +68,8 @@ export function Navbar() {
 
             {/* Mobile Nav */}
             {mobileMenuOpen && (
-                <div className="absolute top-full left-0 right-0 bg-ink border-b border-border shadow-2xl p-6 flex flex-col gap-6 md:hidden">
+                <div className="absolute top-full left-0 right-0 bg-ink border-b border-border shadow-2xl p-6 flex flex-col gap-6 md:hidden max-h-[calc(100vh-80px)] overflow-y-auto">
+                    <div className="font-mono text-xs text-gray-light tracking-widest uppercase border-b border-border pb-2">— For Brands —</div>
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
@@ -76,11 +80,22 @@ export function Navbar() {
                             {link.name}
                         </Link>
                     ))}
-                    <Button variant="filled-green" className="w-full justify-center" asChild>
-                        <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Book a Call</Link>
-                    </Button>
+                    
+                    <div className="font-mono text-xs text-green tracking-widest uppercase mt-4 border-b border-border pb-2">— For Clippers —</div>
+                    <Link href="/clippers" className="text-white text-lg font-sans font-medium" onClick={() => setMobileMenuOpen(false)}>How It Works</Link>
+                    <Link href="/clippers/campaigns" className="text-white text-lg font-sans font-medium" onClick={() => setMobileMenuOpen(false)}>Open Campaigns</Link>
+                    <Link href="/clippers/register" className="text-white text-lg font-sans font-medium" onClick={() => setMobileMenuOpen(false)}>Register</Link>
+
+                    <div className="flex flex-col gap-4 mt-6">
+                        <Button variant="filled-green" className="w-full justify-center" asChild>
+                            <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Book a Call</Link>
+                        </Button>
+                        <Button variant="outline-green" className="w-full justify-center" asChild>
+                            <Link href="/clippers/register" onClick={() => setMobileMenuOpen(false)}>Register as Clipper</Link>
+                        </Button>
+                    </div>
                 </div>
             )}
-        </header>
+        </nav>
     )
 }

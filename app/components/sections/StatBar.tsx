@@ -3,12 +3,14 @@
 import { motion } from "framer-motion"
 import { fadeUp, stagger } from "@/app/lib/utils"
 
+import { StatCounter } from "@/app/components/ui/StatCounter"
+
 export function StatBar() {
     const stats = [
-        { number: "10+", label: "Kenyan\nClippers" },
-        { number: "100K+", label: "Views\nper clip" },
-        { number: "1M+", label: "Views per\ncampaign" },
-        { number: "48H", label: "Campaign\nReport" },
+        { value: 10, suffix: "+", label: "Kenyan\nClippers" },
+        { value: 100, suffix: "K+", label: "Views\nper clip" },
+        { value: 1, suffix: "M+", label: "Views per\ncampaign" },
+        { value: 48, suffix: "H", label: "Campaign\nReport" },
     ]
 
     return (
@@ -23,7 +25,9 @@ export function StatBar() {
                 >
                     {stats.map((stat, index) => (
                         <motion.div key={index} variants={fadeUp} className="flex flex-col items-center">
-                            <div className="font-anton text-5xl md:text-7xl mb-4 leading-none">{stat.number}</div>
+                            <div className="font-anton text-5xl md:text-7xl mb-4 leading-none">
+                                <StatCounter value={stat.value} suffix={stat.suffix} />
+                            </div>
                             <div className="font-sans text-sm md:text-base font-bold whitespace-pre-line leading-tight">{stat.label}</div>
                         </motion.div>
                     ))}

@@ -10,6 +10,7 @@ import { StatBar } from "@/app/components/sections/StatBar"
 import { PricingPreview } from "@/app/components/sections/PricingPreview"
 import { WhyClipGanji } from "@/app/components/sections/WhyClipGanji"
 import { ContactCTA } from "@/app/components/sections/ContactCTA"
+import { Ticker } from "@/app/components/ui/Ticker"
 
 export default function Home() {
   return (
@@ -17,12 +18,14 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <Ticker />
         <ProblemSection />
         <SolutionSection />
         <HowItWorks />
         <AdFormats />
         <StatBar />
         <PricingPreview />
+        <Ticker />
         <WhyClipGanji />
         <ContactCTA />
       </main>

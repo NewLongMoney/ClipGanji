@@ -1,88 +1,73 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Heart, MessageCircle, Share2, Bookmark } from "lucide-react"
-import { float } from "@/app/lib/utils"
 
 export function PhoneMockup() {
-    return (
-        <motion.div
-            className="relative w-full max-w-[320px] mx-auto aspect-[9/16] bg-black rounded-[2rem] border-4 border-border overflow-hidden shadow-2xl"
-            variants={float}
-            animate="animate"
-        >
-            {/* Fake Video Content Area */}
-            <div className="absolute inset-0 bg-ink" />
+  return (
+    <motion.div
+      animate={{ y: [0, -14, 0] }}
+      transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+      className="relative mx-auto"
+      style={{ width: 280, height: 560 }}
+    >
+      {/* Phone shell */}
+      <div className="absolute inset-0 rounded-[40px] bg-[#1a1a1a] border-2 border-[#333] shadow-2xl overflow-hidden">
+        
+        {/* Status bar */}
+        <div className="flex justify-between items-center px-6 pt-4 pb-2">
+          <span className="text-white text-xs font-medium">9:41</span>
+          <div className="w-16 h-4 bg-black rounded-full" /> {/* Dynamic island */}
+          <div className="flex gap-1 items-center">
+            <div className="w-3 h-2 border border-white rounded-sm" />
+          </div>
+        </div>
 
-            {/* Brand Logo Bug */}
-            <div className="absolute top-4 right-4 z-20">
-                <div className="bg-gold text-black font-anton text-sm px-3 py-1 rounded-sm shadow-lg border border-gold-dim">
-                    BRAND LOGO
-                </div>
+        {/* Video background — dark gradient simulating a clip */}
+        <div className="absolute inset-0 top-10 bg-gradient-to-b from-[#1a2a1a] via-[#0d1a0d] to-[#060809]" />
+        
+        {/* LOGO BUG — top right, this is the whole point */}
+        <div className="absolute top-16 right-4 z-20">
+          <div className="bg-[#F5B800] text-black text-[9px] font-black px-2 py-1 rounded flex items-center gap-1 shadow-lg">
+            <span>BRAND</span>
+            <span>LOGO</span>
+          </div>
+          {/* Annotation */}
+          <div className="absolute -left-24 top-1 flex items-center gap-1">
+            <span className="text-[#00C853] text-[8px] font-mono whitespace-nowrap">← always visible</span>
+          </div>
+        </div>
 
-                {/* Glow arrow annotation (CSS only for now, could use SVG) */}
-                <div className="absolute right-full top-1/2 -translate-y-1/2 mr-4 hidden md:flex items-center w-[150px]">
-                    <span className="font-mono text-green text-xs whitespace-nowrap mr-2">
-                        Your logo. Always visible.
-                    </span>
-                    <div className="h-[1px] bg-green flex-grow relative">
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 border-t border-r border-green rotate-45" />
-                    </div>
-                </div>
+        {/* Creator info bottom */}
+        <div className="absolute bottom-20 left-3 right-12 z-20">
+          <p className="text-white text-xs font-bold">@clipganji_creator</p>
+          <p className="text-white/70 text-[10px] mt-1 leading-tight">
+            Your brand. Every clip. Every view. 🔥
+          </p>
+          <div className="flex items-center gap-1 mt-2">
+            <div className="w-4 h-4 rounded-full bg-[#00C853]" />
+            <span className="text-white/60 text-[9px]">original sound - ClipGanji</span>
+          </div>
+        </div>
+
+        {/* TikTok right-side icons */}
+        <div className="absolute right-2 bottom-28 flex flex-col items-center gap-4 z-20">
+          {['❤️', '💬', '↗️', '🎵'].map((icon, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <span className="text-lg">{icon}</span>
+              <span className="text-white/60 text-[8px]">{['102K','1.2K','8K',''][i]}</span>
             </div>
+          ))}
+        </div>
 
-            {/* Fake UI Overlay */}
-            <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent z-10">
-                <div className="flex items-end justify-between">
-                    <div className="flex-1 pr-4">
-                        <div className="font-sans font-medium text-white text-sm mb-1">
-                            @clipganji_creator
-                        </div>
-                        <div className="font-sans text-xs text-white/80 line-clamp-2">
-                            Wait until the end 🤯 This is why we created the best network in Kenya. Let&apos;s go! 🚀
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-4 items-center mb-2">
-                        <div className="w-10 h-10 rounded-full bg-border flex items-center justify-center text-white/80 overflow-hidden border border-white/20">
-                            <div className="w-full h-full bg-gray" />
-                        </div>
-
-                        <div className="flex flex-col items-center gap-1">
-                            <Heart className="w-6 h-6 text-white drop-shadow-md" />
-                            <span className="text-[10px] text-white font-medium">102K</span>
-                        </div>
-
-                        <div className="flex flex-col items-center gap-1">
-                            <MessageCircle className="w-6 h-6 text-white drop-shadow-md" />
-                            <span className="text-[10px] text-white font-medium">1,204</span>
-                        </div>
-
-                        <div className="flex flex-col items-center gap-1">
-                            <Bookmark className="w-6 h-6 text-white drop-shadow-md" />
-                            <span className="text-[10px] text-white font-medium">8K</span>
-                        </div>
-
-                        <div className="flex flex-col items-center gap-1">
-                            <Share2 className="w-6 h-6 text-white drop-shadow-md" />
-                            <span className="text-[10px] text-white font-medium">Share</span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Fake Music Scroller */}
-                <div className="flex items-center gap-2 mt-3 overflow-hidden">
-                    <div className="w-3 h-3 text-white">🎵</div>
-                    <div className="font-sans text-xs text-white font-normal truncate">
-                        original sound - ClipGanji
-                    </div>
-                </div>
-            </div>
-
-            {/* Fake Progress Bar */}
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20 z-20">
-                <div className="h-full bg-white/80 w-1/3" />
-            </div>
-        </motion.div>
-    )
+        {/* Progress bar */}
+        <div className="absolute bottom-12 left-0 right-0 h-[2px] bg-white/20">
+          <motion.div
+            className="h-full bg-white"
+            animate={{ width: ['30%', '75%', '30%'] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+          />
+        </div>
+      </div>
+    </motion.div>
+  )
 }

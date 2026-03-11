@@ -49,7 +49,7 @@ export default function RatesPage() {
                         All campaigns are guaranteed to hit view targets. UTM-tracked. Geo-filtered to Kenya. Detailed reporting delivered within 48 hours of campaign completion.
                     </p>
 
-                    <div className="bg-card rounded-md border border-border p-8 mb-24 shadow-2xl">
+                    <div className="bg-card rounded-md border border-border p-8 mb-16 shadow-2xl">
                         <PricingTable rows={rateRows} />
                         <div className="mt-8 pt-8 border-t border-border flex flex-col md:flex-row gap-8 justify-between text-sans text-sm text-gray-light">
                             <div>
@@ -59,6 +59,15 @@ export default function RatesPage() {
                                 All prices are exclusive of VAT.
                             </div>
                         </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-6 mb-24 justify-center items-center">
+                        <a href="/downloads/ClipGanji_PitchDeck.pdf" target="_blank" rel="noopener noreferrer" className="bg-green text-black px-8 py-4 rounded-md font-anton text-2xl uppercase hover:bg-gold transition-colors min-w-[300px] text-center shadow-lg">
+                            Download Pitch Deck (PDF)
+                        </a>
+                        <a href="/downloads/ClipGanji_Rate_Card.docx" target="_blank" rel="noopener noreferrer" className="bg-ink border border-border text-white px-8 py-4 rounded-md font-anton text-2xl uppercase hover:border-gold hover:text-gold transition-colors min-w-[300px] text-center shadow-lg">
+                            Download Rate Card (DOCX)
+                        </a>
                     </div>
 
                     <div className="mb-16">

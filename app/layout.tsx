@@ -42,7 +42,6 @@ export default function RootLayout({
       <body
         className={`${dmSans.variable} ${anton.variable} ${jetbrainsMono.variable} font-sans antialiased text-white bg-black`}
       >
-        <div className="grain" />
         {children}
       </body>
     </html>

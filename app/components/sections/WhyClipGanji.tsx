@@ -8,19 +8,19 @@ import { PillarCard } from "@/app/components/ui/PillarCard"
 export function WhyClipGanji() {
     const pillars = [
         {
-            numeral: "I",
+            numeral: "01",
             accent: "green" as const,
             title: "Cannot Be Blocked, Skipped, or Ignored",
             body: "Your logo is embedded inside the video file — not an ad server overlay. No blocker removes it. No skip button bypasses it."
         },
         {
-            numeral: "II",
+            numeral: "02",
             accent: "gold" as const,
             title: "Every View Is Verified",
             body: "UTM-tracked. Geo-filtered to Kenya. Tied to app downloads. You get proof, not estimates."
         },
         {
-            numeral: "III",
+            numeral: "03",
             accent: "green" as const,
             title: "Earned Attention — Not Forced Exposure",
             body: "People chose to watch this clip. Your brand is part of content they wanted. Recall is 4–7x higher than forced-view formats."
