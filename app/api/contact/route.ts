@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
     try {
-        const body = await request.json();
-        const { companyName, name, email, budget, message } = body;
+        const body = await req.json();
+        const { companyName, name, email, budget, message, requestRateCard } = body;
 
+        // Basic validation
         if (!companyName || !name || !email || !budget || !message) {
             return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
         }
@@ -27,6 +28,7 @@ export async function POST(request: Request) {
                     <p style="margin: 0 0 10px 0;"><strong style="color: #aaa;">Name:</strong> <br/>${name}</p>
                     <p style="margin: 0 0 10px 0;"><strong style="color: #aaa;">Email:</strong> <br/>${email}</p>
                     <p style="margin: 0 0 10px 0;"><strong style="color: #aaa;">Budget:</strong> <br/>${budget}</p>
+                    <p style="margin: 0 0 10px 0;"><strong style="color: #aaa;">Requested Rate Card?:</strong> <br/>${requestRateCard ? '<span style="color: #00C853; font-weight: bold;">YES</span>' : 'No'}</p>
                 </div>
                 <h3 style="color: #eee; margin-top: 30px; margin-bottom: 10px;">Message:</h3>
                 <div style="background: #111; padding: 20px; border-radius: 4px; color: #ddd; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">

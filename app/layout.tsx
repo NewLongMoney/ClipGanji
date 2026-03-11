@@ -32,6 +32,8 @@ export const metadata: Metadata = {
   }
 };
 
+import { Providers } from "@/app/components/auth/Providers";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,7 +44,9 @@ export default function RootLayout({
       <body
         className={`${dmSans.variable} ${anton.variable} ${jetbrainsMono.variable} font-sans antialiased text-white bg-black`}
       >
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -117,8 +117,20 @@ export function ContactCTA() {
                                         placeholder="Message / Brief Description"
                                         required
                                         rows={4}
-                                        className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors resize-none"
+                                        className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors resize-none mb-2"
                                     ></textarea>
+
+                                    <div className="flex items-start gap-3 mb-2">
+                                        <input
+                                            type="checkbox"
+                                            name="requestRateCard"
+                                            id="requestRateCard"
+                                            className="mt-1.5 w-4 h-4 rounded border-black/20 text-black focus:ring-black bg-black/10 transition-colors"
+                                        />
+                                        <label htmlFor="requestRateCard" className="text-black/80 text-sm leading-tight">
+                                            Please send me the confidential ClipGanji Rate Card
+                                        </label>
+                                    </div>
 
                                     {status === "error" && (
                                         <div className="text-red-600 font-medium text-sm">There was an error sending your message. Please try again.</div>

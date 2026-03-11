@@ -89,6 +89,18 @@ export function ClipperHero() {
                         <Link href="/clippers/campaigns">See Open Campaigns</Link>
                     </Button>
                 </motion.div>
+
+                <motion.div
+                    className="mt-8 text-center"
+                    variants={itemVariants}
+                    initial="hidden"
+                    animate="show"
+                >
+                    <p className="text-gray-light text-sm mb-2">Already registered?</p>
+                    <Link href="/clippers/login" className="font-mono text-green text-sm uppercase tracking-widest hover:text-white transition-colors border-b border-green/30 pb-1 hover:border-white">
+                        LOG IN TO DASHBOARD
+                    </Link>
+                </motion.div>
             </div>
 
             {/* Scroll Indicator */}

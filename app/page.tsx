@@ -7,7 +7,6 @@ import { SolutionSection } from "@/app/components/sections/SolutionSection"
 import { HowItWorks } from "@/app/components/sections/HowItWorks"
 import { AdFormats } from "@/app/components/sections/AdFormats"
 import { StatBar } from "@/app/components/sections/StatBar"
-import { PricingPreview } from "@/app/components/sections/PricingPreview"
 import { WhyClipGanji } from "@/app/components/sections/WhyClipGanji"
 import { ContactCTA } from "@/app/components/sections/ContactCTA"
 import { Ticker } from "@/app/components/ui/Ticker"
@@ -24,7 +23,6 @@ export default function Home() {
         <HowItWorks />
         <AdFormats />
         <StatBar />
-        <PricingPreview />
         <Ticker />
         <WhyClipGanji />
         <ContactCTA />
