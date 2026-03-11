@@ -67,7 +67,7 @@ export default function ClipperRegister() {
                 // Redirect to dashboard after 2 seconds
                 setTimeout(() => router.push('/clippers/dashboard'), 2000)
             } else {
-                throw new Error(result.error || 'Failed to submit application')
+                throw new Error(result.details || result.error || 'Failed to submit application')
             }
         } catch (err) {
             console.error(err)

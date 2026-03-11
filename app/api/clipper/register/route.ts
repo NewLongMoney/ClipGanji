@@ -17,6 +17,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
+  const safeInt = (val: unknown) => {
+    const parsed = parseInt(val as string)
+    return isNaN(parsed) ? 0 : parsed
+  }
+
   try {
     // Check if profile already exists
     const existing = await prisma.clipperProfile.findUnique({
@@ -34,11 +39,11 @@ export async function POST(req: Request) {
         phone: body.phone,
         county: body.county,
         tiktokHandle: body.tiktokHandle || null,
-        tiktokFollowers: body.tiktokFollowers ? parseInt(body.tiktokFollowers) : 0,
+        tiktokFollowers: safeInt(body.tiktokFollowers),
         instagramHandle: body.instagramHandle || null,
-        instagramFollowers: body.instagramFollowers ? parseInt(body.instagramFollowers) : 0,
+        instagramFollowers: safeInt(body.instagramFollowers),
         youtubeChannel: body.youtubeChannel || null,
-        youtubeSubscribers: body.youtubeSubscribers ? parseInt(body.youtubeSubscribers) : 0,
+        youtubeSubscribers: safeInt(body.youtubeSubscribers),
         postFrequency: body.postFrequency || null,
         contentTypes: body.contentTypes || [],
         audienceDescription: body.audienceDescription || null,
@@ -53,7 +58,10 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, profileId: profile.id })
   } catch (error) {
-    console.error('Registration error:', error)
-    return NextResponse.json({ error: 'Failed to save profile' }, { status: 500 })
+    console.error('Registration error detail:', error)
+    return NextResponse.json({ 
+      error: 'Failed to save profile',
+      details: error instanceof Error ? error.message : String(error)
+    }, { status: 500 })
   }
 }
