@@ -25,11 +25,23 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ClipGanji — Your Brand Inside Every Clip",
     description: "Kenya's first short-form video ad network. 10+ creators. Verified views. 72-hour launch.",
-    url: "https://clipganji.com",
+    url: "https://www.clipganji.com",
     siteName: "ClipGanji",
     locale: "en_KE",
     type: "website",
-  }
+  },
+  manifest: "/manifest.json",
+  themeColor: "#000000",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "ClipGanji",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
 };
 
 import { Providers } from "@/app/components/auth/Providers";
