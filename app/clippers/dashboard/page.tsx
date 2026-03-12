@@ -47,7 +47,7 @@ function PlatformBadge({ platform }: { platform: string }) {
 
 // ── MAIN DASHBOARD ─────────────────────────────────────────────────────
 export default function ClipperDashboard() {
-  const { status: authStatus } = useSession();
+  const { data: session, status: authStatus } = useSession();
   const router = useRouter()
   const [dashData, setDashData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
@@ -79,13 +79,32 @@ export default function ClipperDashboard() {
   const stats = dashData?.stats
   const activeCampaigns = dashData?.activeCampaigns || []
   const recentSubmissions = dashData?.recentSubmissions || []
+  const profileStatus = dashData?.profile?.status || 'pending'
+  const clipperName = dashData?.profile?.fullName || session?.user?.name || 'Clipper'
 
   return (
     <DashboardLayout 
       title="DASHBOARD" 
-      subtitle={`ACTIVE STATUS: ${dashData?.profile?.status || 'PENDING'}`}
+      subtitle={`WELCOME BACK, ${clipperName.toUpperCase()}`}
     >
       <div className="space-y-8 max-w-7xl mx-auto pb-12">
+
+        {/* ── STATUS BANNER ──────────────────────────────────────── */}
+        {profileStatus === 'pending' && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-[#F5B800]/10 border border-[#F5B800]/20 rounded-2xl p-4 flex items-center gap-4"
+          >
+            <div className="shrink-0 w-10 h-10 rounded-full bg-[#F5B800]/20 flex items-center justify-center text-[#F5B800]">
+                <Clock size={20} />
+            </div>
+            <div>
+                <h4 className="text-white text-sm font-bold uppercase tracking-tight">Application Under Review</h4>
+                <p className="text-[#8A949C] text-xs font-sans">Our admins are currently reviewing your profile. You can still browse campaigns but won't be able to submit until approved.</p>
+            </div>
+          </motion.div>
+        )}
 
         {/* ── EARNINGS BANNER ───────────────────────────────────── */}
         <motion.div
@@ -180,7 +199,7 @@ export default function ClipperDashboard() {
                     className="bg-[#0E1214] border border-[#1E2428] rounded-2xl overflow-hidden hover:border-[#00C853]/30 transition-all group"
                   >
                     <div className="h-1.5 w-full bg-[#1E2428]">
-                        <div className="h-full bg-[#00C853]" style={{ width: `${Math.min((campaign.myViews / 10000) * 100, 100)}%`, backgroundColor: campaign.accentColor }} />
+                        <div className="h-full bg-[#00C853]" style={{ width: `${Math.min((campaign.myViews / 10000) * 100, 100)}%`, backgroundColor: campaign.accentColor || '#00C853' }} />
                     </div>
                     <div className="p-6">
                       <div className="flex items-start justify-between mb-6">
@@ -201,7 +220,7 @@ export default function ClipperDashboard() {
                           <p className="text-[#4A5259] text-[9px] uppercase font-mono mt-1">Clips</p>
                         </div>
                         <div className="bg-black/40 rounded-xl p-3 text-center border border-white/5">
-                          <p className="font-anton text-lg" style={{ color: campaign.accentColor }}>KSh {campaign.myEarnings.toLocaleString()}</p>
+                          <p className="font-anton text-lg" style={{ color: campaign.accentColor || '#00C853' }}>KSh {campaign.myEarnings.toLocaleString()}</p>
                           <p className="text-[#4A5259] text-[9px] uppercase font-mono mt-1">Earned</p>
                         </div>
                       </div>
@@ -231,7 +250,7 @@ export default function ClipperDashboard() {
             <div className="bg-[#0E1214] border border-[#1E2428] rounded-3xl overflow-hidden divide-y divide-[#1E2428]/50">
               {recentSubmissions.length === 0 ? (
                   <div className="p-12 text-center">
-                    <p className="text-gray text-xs font-mono">NO SUBMISSIONS YET</p>
+                    <p className="text-gray text-xs font-mono">No submissions yet — join a campaign to get started</p>
                   </div>
               ) : (
                 recentSubmissions.map((sub: RecentSubmission, i: number) => (

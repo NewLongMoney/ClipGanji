@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     // Send notification to ClipGanji
     const adminHtml = `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #000; color: #fff; padding: 40px; border-radius: 8px; border: 1px solid #333;">
-        <img src="https://www.clipganji.com/images/logo2.png" alt="ClipGanji Logo" style="height: 40px; margin-bottom: 30px;" />
+        <img src="https://clipganji.com/images/logo2.png" alt="ClipGanji Logo" style="height: 40px; margin-bottom: 30px;" />
         <h2 style="color: #00C853; text-transform: uppercase; margin-bottom: 20px;">New Clipper Application</h2>
         
         <h3 style="color: #F5B800;">Personal Info</h3>
@@ -69,7 +69,7 @@ export async function POST(req: Request) {
 
     const userHtml = `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #000; color: #fff; padding: 40px; border-radius: 8px; border: 1px solid #00C853;">
-        <img src="https://www.clipganji.com/images/logo2.png" alt="ClipGanji Logo" style="height: 50px; margin-bottom: 30px;" />
+        <img src="https://clipganji.com/images/logo2.png" alt="ClipGanji Logo" style="height: 50px; margin-bottom: 30px;" />
         <h2 style="color: #00C853; text-transform: uppercase; margin-bottom: 20px;">Application Received</h2>
         <p style="font-size: 16px; line-height: 1.6; color: #eee; margin-bottom: 20px;">
           Hi ${body.fullName},<br/><br/>
@@ -87,12 +87,12 @@ export async function POST(req: Request) {
         <table width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr>
                 <td valign="top" style="padding-right: 20px;">
-                    <img src="https://www.clipganji.com/images/logo1.png" alt="ClipGanji Logo Bug" style="height: 40px;" />
+                    <img src="https://clipganji.com/images/logo1.png" alt="ClipGanji Logo Bug" style="height: 40px;" />
                 </td>
                 <td valign="top">
                     <p style="font-size: 14px; color: #888; line-height: 1.5; margin: 0;">
                         <strong>The ClipGanji Team</strong><br/>
-                        <a href="https://www.clipganji.com" style="color: #F5B800; text-decoration: none;">clipganji.com</a><br/>
+                        <a href="https://clipganji.com" style="color: #F5B800; text-decoration: none;">clipganji.com</a><br/>
                         <a href="mailto:clipganji@gmail.com" style="color: #888; text-decoration: none;">clipganji@gmail.com</a>
                     </p>
                 </td>

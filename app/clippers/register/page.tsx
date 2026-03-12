@@ -61,7 +61,11 @@ export default function ClipperRegister() {
 
             if (res.ok && result.success) {
                 setStatus('success')
-                // Redirect removed to allow user to see success state and click buttons
+                // Re-fetch session to update token with hasProfile=true
+                router.refresh()
+                setTimeout(() => {
+                    router.push('/clippers/dashboard')
+                }, 2000)
             } else {
                 throw new Error(result.details || result.error || 'Failed to submit application')
             }

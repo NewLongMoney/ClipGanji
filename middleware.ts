@@ -6,15 +6,20 @@ export default withAuth(
     const token = req.nextauth.token
     const path = req.nextUrl.pathname
 
-    // If signed in but no profile → force to register
-    // (except if they're already on the register page)
-    if (
-      token &&
-      !token.hasProfile &&
-      path.startsWith('/clippers/') &&
-      !path.startsWith('/clippers/register') &&
-      !path.startsWith('/clippers/login')
-    ) {
+    // Public clipper landing pages - always allow
+    const publicClipperPaths = [
+      '/clippers',
+      '/clippers/login',
+      '/clippers/register',
+      '/clippers/campaigns'
+    ]
+    
+    if (publicClipperPaths.includes(path)) {
+      return NextResponse.next()
+    }
+
+    // Force registration if authenticated but no profile
+    if (token && !token.hasProfile && path.startsWith('/clippers/')) {
       return NextResponse.redirect(new URL('/clippers/register', req.url))
     }
 
@@ -24,27 +29,30 @@ export default withAuth(
     callbacks: {
       authorized: ({ token, req }) => {
         const path = req.nextUrl.pathname
-        // Public clipper pages
-        // Public paths
-        if (
-          path === '/' ||
-          path === '/contact' ||
-          path === '/clippers' ||
-          path === '/clippers/login' ||
-          path === '/api/contact' ||
-          path.startsWith('/clippers/campaigns/')
-        ) {
+        
+        // Root and core public pages
+        if (path === '/' || path === '/contact' || path === '/api/contact') {
+          return true
+        }
+
+        // Public clipper pages (landing/login/register/browse campaigns)
+        const publicPaths = [
+          '/clippers',
+          '/clippers/login',
+          '/clippers/register',
+          '/clippers/campaigns'
+        ]
+        if (publicPaths.includes(path)) {
           return true
         }
 
         // Admin routes
         if (path.startsWith('/api/admin')) {
-          // Additional check for admin secret is done in the route
           return !!token
         }
 
-        // Clipper routes
-        if (path.startsWith('/clippers') || path.startsWith('/api/clipper')) {
+        // Protected internal clipper routes (dashboard/settings/etc)
+        if (path.startsWith('/clippers/') || path.startsWith('/api/clipper/')) {
           return !!token
         }
 

@@ -35,8 +35,10 @@ export const authOptions: NextAuthOptions = {
       }
       return session
     },
-    async redirect({ baseUrl }) {
-      return `${baseUrl}/clippers/dashboard`
+    async redirect({ url, baseUrl }) {
+      // If the user is signing in, check where we should send them
+      if (url.startsWith(baseUrl)) return url;
+      return baseUrl;
     },
   },
   pages: {

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ClipGanji — Your Brand Inside Every Clip",
     description: "Kenya's first short-form video ad network. 10+ creators. Verified views. 72-hour launch.",
-    url: "https://www.clipganji.com",
+    url: "https://clipganji.com",
     siteName: "ClipGanji",
     locale: "en_KE",
     type: "website",
