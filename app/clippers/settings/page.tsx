@@ -4,9 +4,8 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { 
-  Settings, User, Phone, Share2, 
-  CreditCard, Save, AlertCircle, CheckCircle2,
-  ChevronLeft
+  User, Share2, 
+  CreditCard, Save, AlertCircle, CheckCircle2
 } from 'lucide-react'
 import Link from 'next/link'
 import { DashboardLayout } from '@/app/components/layout/DashboardLayout'
