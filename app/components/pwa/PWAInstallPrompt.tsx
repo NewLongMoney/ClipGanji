@@ -2,23 +2,28 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Download, X } from 'lucide-react'
-import { cn } from "@/app/lib/utils"
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
+}
 
 export function PWAInstallPrompt() {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null)
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
   const [isVisible, setIsVisible] = useState(false)
   const [isStandalone, setIsStandalone] = useState(false)
 
   useEffect(() => {
     // Check if already in standalone mode (installed)
-    if (window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone) {
+    if (window.matchMedia('(display-mode: standalone)').matches || (window.navigator as Navigator & { standalone?: boolean }).standalone) {
       setIsStandalone(true)
       return
     }
 
-    const handler = (e: any) => {
-      e.preventDefault()
-      setDeferredPrompt(e)
+    const handler = (e: Event) => {
+      const promptEvent = e as BeforeInstallPromptEvent
+      promptEvent.preventDefault()
+      setDeferredPrompt(promptEvent)
       
       // Delay showing the prompt slightly for better UX
       setTimeout(() => {

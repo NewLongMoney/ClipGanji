@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, Megaphone, Upload, Wallet,
-  Settings, LogOut, Bell, Menu, X, ChevronRight
+  Settings, LogOut, Bell, Menu, X
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'

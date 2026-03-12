@@ -7,16 +7,37 @@ import {
   User, Share2, 
   CreditCard, Save, AlertCircle, CheckCircle2
 } from 'lucide-react'
-import Link from 'next/link'
 import { DashboardLayout } from '@/app/components/layout/DashboardLayout'
 import { Button } from '@/app/components/ui/Button'
 import { cn } from '@/app/lib/utils'
 
+interface ProfileData {
+    fullName?: string
+    phone?: string
+    tiktokHandle?: string
+    instagramHandle?: string
+    youtubeChannel?: string
+    payoutMethod?: 'mpesa' | 'bank'
+    mpesaNumber?: string
+    bankName?: string
+    bankAccount?: string
+}
+
 export default function SettingsPage() {
-    const { data: session, status: authStatus } = useSession()
+    const { status: authStatus } = useSession()
     const router = useRouter()
     
-    const [profile, setProfile] = useState<any>(null)
+    const [profile, setProfile] = useState<ProfileData>({
+        fullName: '',
+        phone: '',
+        tiktokHandle: '',
+        instagramHandle: '',
+        youtubeChannel: '',
+        payoutMethod: 'mpesa',
+        mpesaNumber: '',
+        bankName: '',
+        bankAccount: ''
+    })
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
     const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
@@ -56,7 +77,7 @@ export default function SettingsPage() {
                 setStatus('error')
                 setMessage('Failed to update profile.')
             }
-        } catch (err) {
+        } catch {
             setStatus('error')
             setMessage('Something went wrong.')
         } finally {
@@ -159,7 +180,7 @@ export default function SettingsPage() {
                         </div>
                         <div className="p-6 space-y-6">
                             <div className="flex gap-4">
-                                {['mpesa', 'bank'].map((method) => (
+                                {(['mpesa', 'bank'] as const).map((method) => (
                                     <button
                                         key={method}
                                         type="button"
