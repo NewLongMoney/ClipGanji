@@ -147,9 +147,12 @@ export function ContactCTA() {
 
                                 <div className="mt-12 pt-8 border-t border-black/20 font-sans font-medium">
                                     <div className="text-black/60 mb-2">Or reach us directly on WhatsApp/Email:</div>
-                                    <div className="text-xl">
+                                    <div className="text-xl flex flex-col gap-2">
                                         <a href="https://wa.me/254115336356?text=Hi%20ClipGanji!%20I'd%20like%20to%20start%20a%20campaign." target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                                             +254 115 336 356
+                                        </a>
+                                        <a href="https://wa.me/254704096417?text=Hi%20ClipGanji!%20I'd%20like%20to%20start%20a%20campaign." target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                                            +254 704 096 417
                                         </a>
                                     </div>
                                     <div className="text-xl mt-2">

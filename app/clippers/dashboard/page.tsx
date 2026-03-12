@@ -286,10 +286,16 @@ export default function ClipperDashboard() {
             <div className="bg-[#00C853]/5 border border-[#00C853]/20 rounded-3xl p-6">
                 <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-2">Need Support?</h4>
                 <p className="text-[#8A949C] text-[10px] leading-relaxed mb-4 font-sans">Our admins are online to help you verify views or troubleshoot links.</p>
-                <a href="https://wa.me/254702005560" target="_blank" rel="noreferrer" 
-                   className="text-[#00C853] text-[10px] font-anton uppercase tracking-widest flex items-center gap-2">
-                   Contact WhatsApp →
-                </a>
+                <div className="flex flex-col gap-2">
+                   <a href="https://wa.me/254702005560" target="_blank" rel="noreferrer" 
+                      className="text-[#00C853] text-[10px] font-anton uppercase tracking-widest flex items-center gap-2">
+                      Contact Admin 1 →
+                   </a>
+                   <a href="https://wa.me/254704096417" target="_blank" rel="noreferrer" 
+                      className="text-[#00C853] text-[10px] font-anton uppercase tracking-widest flex items-center gap-2">
+                      Contact Admin 2 →
+                   </a>
+                </div>
             </div>
           </div>
 

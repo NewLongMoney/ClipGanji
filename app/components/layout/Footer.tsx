@@ -37,8 +37,9 @@ export function Footer() {
                     {/* Column 4 */}
                     <div className="flex flex-col gap-4">
                         <h4 className="font-mono text-white text-sm tracking-widest uppercase mb-2">Contact Us</h4>
-                        <div className="font-sans text-gray-light">
+                        <div className="font-sans text-gray-light flex flex-col gap-1">
                             <a href="https://wa.me/254115336356?text=Hi%20ClipGanji!%20I'd%20like%20to%20start%20a%20brand%20campaign." target="_blank" rel="noopener noreferrer" className="hover:text-green transition-colors">+254 115 336 356</a>
+                            <a href="https://wa.me/254704096417?text=Hi%20ClipGanji!%20I'd%20like%20to%20start%20a%20brand%20campaign." target="_blank" rel="noopener noreferrer" className="hover:text-green transition-colors">+254 704 096 417</a>
                         </div>
                         <div className="font-sans text-gray-light">
                             <a href="mailto:clipganji@gmail.com" className="hover:text-green transition-colors">clipganji@gmail.com</a>
