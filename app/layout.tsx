@@ -45,6 +45,7 @@ export const metadata: Metadata = {
 };
 
 import { Providers } from "@/app/components/auth/Providers";
+import { PWAInstallPrompt } from "@/app/components/pwa/PWAInstallPrompt";
 
 export default function RootLayout({
   children,
@@ -58,6 +59,7 @@ export default function RootLayout({
       >
         <Providers>
           {children}
+          <PWAInstallPrompt />
         </Providers>
       </body>
     </html>

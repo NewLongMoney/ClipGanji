@@ -30,3 +30,31 @@ export async function GET() {
 
   return NextResponse.json(profile)
 }
+export async function PATCH(req: Request) {
+  const session = await getServerSession(authOptions)
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
+  }
+
+  const { fullName, phone, tiktokHandle, instagramHandle, youtubeChannel, payoutMethod, mpesaNumber, bankName, bankAccount } = await req.json()
+
+  try {
+    const updatedProfile = await prisma.clipperProfile.update({
+      where: { userId: session.user.id },
+      data: {
+        fullName,
+        phone,
+        tiktokHandle,
+        instagramHandle,
+        youtubeChannel,
+        payoutMethod,
+        mpesaNumber,
+        bankName,
+        bankAccount,
+      },
+    })
+    return NextResponse.json(updatedProfile)
+  } catch {
+    return NextResponse.json({ error: 'Failed to update profile' }, { status: 500 })
+  }
+}
