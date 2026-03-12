@@ -6,6 +6,9 @@ export default withAuth(
     const token = req.nextauth.token
     const path = req.nextUrl.pathname
 
+    // Normalize path to handle trailing slashes
+    const normalizedPath = path.replace(/\/$/, '') || '/'
+
     // Public clipper landing pages - always allow
     const publicClipperPaths = [
       '/clippers',
@@ -14,12 +17,13 @@ export default withAuth(
       '/clippers/campaigns'
     ]
     
-    if (publicClipperPaths.includes(path)) {
+    if (publicClipperPaths.includes(normalizedPath)) {
       return NextResponse.next()
     }
 
     // Force registration if authenticated but no profile
-    if (token && !token.hasProfile && path.startsWith('/clippers/')) {
+    // Only redirect if NOT already on a public page (which we checked above)
+    if (token && !token.hasProfile && normalizedPath.startsWith('/clippers/')) {
       return NextResponse.redirect(new URL('/clippers/register', req.url))
     }
 
@@ -29,9 +33,10 @@ export default withAuth(
     callbacks: {
       authorized: ({ token, req }) => {
         const path = req.nextUrl.pathname
+        const normalizedPath = path.replace(/\/$/, '') || '/'
         
         // Root and core public pages
-        if (path === '/' || path === '/contact' || path === '/api/contact') {
+        if (normalizedPath === '/' || normalizedPath === '/contact' || normalizedPath === '/api/contact') {
           return true
         }
 
@@ -42,17 +47,17 @@ export default withAuth(
           '/clippers/register',
           '/clippers/campaigns'
         ]
-        if (publicPaths.includes(path)) {
+        if (publicPaths.includes(normalizedPath)) {
           return true
         }
 
         // Admin routes
-        if (path.startsWith('/api/admin')) {
+        if (normalizedPath.startsWith('/api/admin')) {
           return !!token
         }
 
         // Protected internal clipper routes (dashboard/settings/etc)
-        if (path.startsWith('/clippers/') || path.startsWith('/api/clipper/')) {
+        if (normalizedPath.startsWith('/clippers/') || normalizedPath.startsWith('/api/clipper/')) {
           return !!token
         }
 

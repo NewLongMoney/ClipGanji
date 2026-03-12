@@ -36,9 +36,15 @@ export const authOptions: NextAuthOptions = {
       return session
     },
     async redirect({ url, baseUrl }) {
-      // If the user is signing in, check where we should send them
-      if (url.startsWith(baseUrl)) return url;
-      return baseUrl;
+      // Ensure we are redirecting to the correct domain (non-www)
+      const cleanBaseUrl = baseUrl.replace('www.', '');
+      
+      // If the url is already internal, keep it
+      if (url.startsWith(baseUrl) || url.startsWith('/')) {
+        return url.startsWith('/') ? `${cleanBaseUrl}${url}` : url;
+      }
+      
+      return cleanBaseUrl;
     },
   },
   pages: {
