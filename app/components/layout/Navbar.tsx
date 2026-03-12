@@ -34,7 +34,7 @@ export function Navbar() {
         >
             <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
                 <Link href="/" className="flex items-center group">
-                    <Image src="/images/LogoNoBackground.png" alt="ClipGanji Logo" width={800} height={300} className="h-48 md:h-64 w-auto object-contain transition-transform group-hover:scale-105" priority />
+                    <Image src="/images/LogoNoBackground.png" alt="ClipGanji Logo" width={300} height={80} className="h-16 md:h-20 w-auto object-contain transition-transform group-hover:scale-105" priority />
                 </Link>
 
                 {/* Desktop Nav */}

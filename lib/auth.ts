@@ -36,15 +36,23 @@ export const authOptions: NextAuthOptions = {
       return session
     },
     async redirect({ url, baseUrl }) {
-      // Ensure we are redirecting to the correct domain (non-www)
-      const cleanBaseUrl = baseUrl.replace('www.', '');
+      // 1. If it's a relative path, use it
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
       
-      // If the url is already internal, keep it
-      if (url.startsWith(baseUrl) || url.startsWith('/')) {
-        return url.startsWith('/') ? `${cleanBaseUrl}${url}` : url;
+      try {
+        const urlObj = new URL(url);
+        const baseObj = new URL(baseUrl);
+        
+        // 2. If it's the same domain (allowing for www vs naked mismatch), allow it
+        if (urlObj.hostname.replace('www.', '') === baseObj.hostname.replace('www.', '')) {
+          return url;
+        }
+      } catch {
+        // Fallback for invalid URLs
       }
-      
-      return cleanBaseUrl;
+
+      // 3. Default to baseUrl
+      return baseUrl;
     },
   },
   pages: {
