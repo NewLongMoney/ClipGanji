@@ -97,8 +97,9 @@ export default function AdminContactsPage() {
                     {expandId === c.id && (
                       <div
                         className="mt-2 p-3 bg-black/30 rounded-lg text-sm text-[#8A949C] whitespace-pre-wrap border border-[#1E2428]"
-                        dangerouslySetInnerHTML={{ __html: escapeHtml(c.message).replace(/\n/g, '<br/>') }}
-                      />
+                      >
+                        {c.message}
+                      </div>
                     )}
                   </td>
                   <td className="px-6 py-4 font-mono text-[#F5B800]">
