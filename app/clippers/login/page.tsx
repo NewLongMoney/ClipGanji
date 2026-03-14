@@ -2,6 +2,7 @@
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 
 export default function ClipperLogin() {
@@ -27,13 +28,12 @@ export default function ClipperLogin() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md mx-4"
       >
-        {/* Logo */}
+        {/* Logo - prominent and clickable */}
         <div className="text-center mb-10">
-          <a href="/" className="inline-block">
-            <span className="font-anton text-4xl text-white">CLIP</span>
-            <span className="font-anton text-4xl text-[#00C853]">GANJI</span>
+          <a href="/" className="inline-block focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00C853] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060809] rounded">
+            <Image src="/images/LogoNoBackground.png" alt="ClipGanji" width={280} height={112} className="h-20 sm:h-24 md:h-28 w-auto mx-auto object-contain" priority />
           </a>
-          <p className="text-[#8A949C] text-sm mt-2 font-mono">{"// CLIPPER PORTAL"}</p>
+          <p className="text-[#8A949C] text-sm mt-3 font-mono tracking-widest">{"// CLIPPER PORTAL"}</p>
         </div>
 
         {/* Card */}

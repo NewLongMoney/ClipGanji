@@ -10,8 +10,8 @@ export function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                     {/* Column 1 */}
                     <div className="md:col-span-1">
-                        <Link href="/" className="inline-flex items-center mb-6">
-                            <Image src="/images/LogoNoBackground.png" alt="ClipGanji Logo" width={250} height={100} className="h-24 w-auto object-contain hover:scale-105 transition-transform" />
+                        <Link href="/" className="inline-flex items-center mb-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-green focus-visible:ring-offset-2 focus-visible:ring-offset-ink rounded">
+                            <Image src="/images/LogoNoBackground.png" alt="ClipGanji Logo" width={320} height={128} className="h-28 sm:h-32 w-auto object-contain hover:scale-[1.02] transition-transform duration-300" />
                         </Link>
                         <p className="font-sans text-gray-light max-w-xs leading-relaxed">
                             Kenya&apos;s short-form video advertising network. Your brand inside every clip.
@@ -19,19 +19,19 @@ export function Footer() {
                     </div>
 
                     {/* Column 2 */}
-                    <div className="flex flex-col gap-4">
-                        <h4 className="font-mono text-white text-sm tracking-widest uppercase mb-2">For Brands</h4>
-                        <Link href="/#how-it-works" className="font-sans text-gray-light hover:text-green transition-colors">How It Works</Link>
-                        <Link href="/#formats" className="font-sans text-gray-light hover:text-green transition-colors">Ad Formats</Link>
-                        <Link href="/weekly" className="font-sans text-gray-light hover:text-green transition-colors">Weekly Campaigns</Link>
+                    <div className="flex flex-col gap-3">
+                        <h4 className="font-mono text-white text-sm tracking-widest uppercase mb-1">For Brands</h4>
+                        <Link href="/#how-it-works" className="font-sans text-gray-light hover:text-green transition-colors py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-green focus-visible:ring-inset rounded">How It Works</Link>
+                        <Link href="/#formats" className="font-sans text-gray-light hover:text-green transition-colors py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-green focus-visible:ring-inset rounded">Ad Formats</Link>
+                        <Link href="/weekly" className="font-sans text-gray-light hover:text-green transition-colors py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-green focus-visible:ring-inset rounded">Weekly Campaigns</Link>
                     </div>
 
                     {/* Column 3 */}
-                    <div className="flex flex-col gap-4">
-                        <h4 className="font-mono text-white text-sm tracking-widest uppercase mb-2">For Clippers</h4>
-                        <Link href="/clippers" className="font-sans text-gray-light hover:text-gold transition-colors">Earn Money</Link>
-                        <Link href="/clippers/campaigns" className="font-sans text-gray-light hover:text-gold transition-colors">Open Campaigns</Link>
-                        <Link href="/clippers/register" className="font-sans text-gray-light hover:text-gold transition-colors">Register</Link>
+                    <div className="flex flex-col gap-3">
+                        <h4 className="font-mono text-white text-sm tracking-widest uppercase mb-1">For Clippers</h4>
+                        <Link href="/clippers" className="font-sans text-gray-light hover:text-gold transition-colors py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-inset rounded">Earn Money</Link>
+                        <Link href="/clippers/campaigns" className="font-sans text-gray-light hover:text-gold transition-colors py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-inset rounded">Open Campaigns</Link>
+                        <Link href="/clippers/register" className="font-sans text-gray-light hover:text-gold transition-colors py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-inset rounded">Register</Link>
                     </div>
 
                     {/* Column 4 */}

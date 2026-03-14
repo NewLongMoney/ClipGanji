@@ -85,26 +85,26 @@ export function ContactCTA() {
                                         name="companyName"
                                         placeholder="Company Name"
                                         required
-                                        className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors"
+                                        className="w-full min-h-[48px] bg-black/10 border-2 border-black/20 text-black placeholder:text-black/60 px-4 py-3.5 rounded-lg focus:outline-none focus:border-black focus:ring-2 focus:ring-black/20 transition-colors"
                                     />
                                     <input
                                         type="text"
                                         name="name"
                                         placeholder="Your Name"
                                         required
-                                        className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors"
+                                        className="w-full min-h-[48px] bg-black/10 border-2 border-black/20 text-black placeholder:text-black/60 px-4 py-3.5 rounded-lg focus:outline-none focus:border-black focus:ring-2 focus:ring-black/20 transition-colors"
                                     />
                                     <input
                                         type="email"
                                         name="email"
                                         placeholder="Email Address"
                                         required
-                                        className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors"
+                                        className="w-full min-h-[48px] bg-black/10 border-2 border-black/20 text-black placeholder:text-black/60 px-4 py-3.5 rounded-lg focus:outline-none focus:border-black focus:ring-2 focus:ring-black/20 transition-colors"
                                     />
                                     <select
                                         name="budget"
                                         required
-                                        className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors appearance-none"
+                                        className="w-full min-h-[48px] bg-black/10 border-2 border-black/20 text-black px-4 py-3.5 rounded-lg focus:outline-none focus:border-black focus:ring-2 focus:ring-black/20 transition-colors appearance-none"
                                     >
                                         <option value="" disabled selected>Budget Range</option>
                                         <option value="25K-80K">KSh 25K–80K</option>
@@ -117,29 +117,31 @@ export function ContactCTA() {
                                         placeholder="Message / Brief Description"
                                         required
                                         rows={4}
-                                        className="w-full bg-black/10 border border-black/20 text-black placeholder:text-black/60 px-4 py-4 rounded-sm focus:outline-none focus:border-black transition-colors resize-none mb-2"
+                                        className="w-full min-h-[120px] bg-black/10 border-2 border-black/20 text-black placeholder:text-black/60 px-4 py-3.5 rounded-lg focus:outline-none focus:border-black focus:ring-2 focus:ring-black/20 transition-colors resize-none"
                                     ></textarea>
 
-                                    <div className="flex items-start gap-3 mb-2">
+                                    <div className="flex items-start gap-3">
                                         <input
                                             type="checkbox"
                                             name="requestRateCard"
                                             id="requestRateCard"
-                                            className="mt-1.5 w-4 h-4 rounded border-black/20 text-black focus:ring-black bg-black/10 transition-colors"
+                                            className="mt-1 w-5 h-5 rounded border-2 border-black/30 text-black focus:ring-2 focus:ring-black/30 bg-black/10 transition-colors cursor-pointer"
                                         />
-                                        <label htmlFor="requestRateCard" className="text-black/80 text-sm leading-tight">
+                                        <label htmlFor="requestRateCard" className="text-black/80 text-sm leading-tight cursor-pointer select-none">
                                             Please send me the confidential ClipGanji Rate Card
                                         </label>
                                     </div>
 
                                     {status === "error" && (
-                                        <div className="text-red-600 font-medium text-sm">There was an error sending your message. Please try again.</div>
+                                        <div className="text-red-700 font-medium text-sm bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3">
+                                            There was an error sending your message. Please try again.
+                                        </div>
                                     )}
 
                                     <button
                                         type="submit"
                                         disabled={status === "submitting"}
-                                        className="w-full bg-black text-green hover:bg-black/80 font-anton uppercase text-xl py-5 rounded-sm transition-colors mt-2 disabled:opacity-50"
+                                        className="w-full min-h-[52px] bg-black text-green hover:bg-black/90 font-anton uppercase text-xl py-4 rounded-lg transition-all mt-2 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-green active:scale-[0.99]"
                                     >
                                         {status === "submitting" ? "SENDING..." : "START A CAMPAIGN"}
                                     </button>
