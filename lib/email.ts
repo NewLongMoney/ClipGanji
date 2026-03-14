@@ -43,6 +43,7 @@ export async function sendMail(options: {
 }): Promise<void> {
   const transporter = getTransporter();
   if (!transporter) throw new Error('Email is not configured (EMAIL_USER/EMAIL_PASS).');
+  
   await transporter.sendMail({
     from: options.from,
     to: options.to,
