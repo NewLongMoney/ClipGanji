@@ -23,6 +23,7 @@ export async function GET(req: Request) {
       budget: c.budget,
       message: c.message,
       requestRateCard: c.requestRateCard,
+      requestPitchDeck: c.requestPitchDeck,
       createdAt: c.createdAt.toISOString(),
     }))
   )

@@ -83,12 +83,12 @@ export function ClipperEarnings() {
                 </motion.div>
 
                 <motion.p 
-                    className="font-mono text-xs text-gray-light text-center"
+                    className="font-mono text-xs text-gray-light text-center max-w-xl mx-auto"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                 >
-                    Earnings calculated on verified views only — UTM-tracked, Kenya geo-filtered. Payouts every Friday via M-Pesa.
+                    Rates shown are base rates and may vary per campaign. Earnings calculated on verified views only — UTM-tracked, Kenya geo-filtered. Payouts every Friday via M-Pesa.
                 </motion.p>
             </div>
         </section>

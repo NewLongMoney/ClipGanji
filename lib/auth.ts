@@ -3,6 +3,11 @@ import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from '@/lib/prisma'
 
+function getAdminEmail(): string {
+  const e = process.env.ADMIN_EMAIL
+  return typeof e === 'string' && e.trim() ? e.trim().toLowerCase() : 'clipganji@gmail.com'
+}
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -30,7 +35,7 @@ export const authOptions: NextAuthOptions = {
         token.profileStatus = profile?.status ?? null
       }
       const email = typeof token.email === 'string' ? token.email.trim().toLowerCase() : ''
-      token.isAdmin = email === 'clipganji@gmail.com'
+      token.isAdmin = email === getAdminEmail()
       return token
     },
     async session({ session, token }) {

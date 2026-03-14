@@ -67,6 +67,13 @@ export function isValidUrl(val: unknown): boolean {
   }
 }
 
+/** Safe href for links: only http/https to prevent javascript: or other schemes. */
+export function safeHref(url: string | null | undefined): string {
+  if (typeof url !== 'string' || !url.trim()) return '#'
+  if (!isValidUrl(url.trim())) return '#'
+  return url.trim()
+}
+
 export function isValidPlatform(val: unknown): val is (typeof PLATFORMS)[number] {
   return typeof val === 'string' && PLATFORMS.includes(val as (typeof PLATFORMS)[number])
 }

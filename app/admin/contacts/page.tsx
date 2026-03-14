@@ -13,6 +13,7 @@ interface ContactRow {
   budget: string
   message: string
   requestRateCard: boolean
+  requestPitchDeck?: boolean
   createdAt: string
 }
 
@@ -58,6 +59,9 @@ export default function AdminContactsPage() {
                 </th>
                 <th className="px-6 py-4 text-[10px] font-mono uppercase text-[#8A949C]">
                   Rate card
+                </th>
+                <th className="px-6 py-4 text-[10px] font-mono uppercase text-[#8A949C]">
+                  Pitch deck
                 </th>
               </tr>
             </thead>
@@ -105,9 +109,14 @@ export default function AdminContactsPage() {
                   </td>
                   <td className="px-6 py-4">
                     {c.requestRateCard ? (
-                      <span className="text-[#00C853] text-xs font-bold">
-                        Yes
-                      </span>
+                      <span className="text-[#00C853] text-xs font-bold">Yes</span>
+                    ) : (
+                      <span className="text-[#4A5259] text-xs">No</span>
+                    )}
+                  </td>
+                  <td className="px-6 py-4">
+                    {c.requestPitchDeck ? (
+                      <span className="text-[#00C853] text-xs font-bold">Yes</span>
                     ) : (
                       <span className="text-[#4A5259] text-xs">No</span>
                     )}

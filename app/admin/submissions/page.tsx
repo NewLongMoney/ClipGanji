@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { CheckCircle, XCircle, ExternalLink } from 'lucide-react'
 import { cn } from '@/app/lib/utils'
+import { safeHref } from '@/lib/security'
 
 interface SubmissionRow {
   id: string
@@ -177,7 +178,7 @@ export default function AdminSubmissionsPage() {
                   </td>
                   <td className="px-6 py-4">
                     <a
-                      href={s.postUrl}
+                      href={safeHref(s.postUrl)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-[#00C853] hover:underline text-sm truncate max-w-[200px]"

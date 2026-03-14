@@ -6,7 +6,11 @@ import nodemailer from 'nodemailer';
 import type { Transporter } from 'nodemailer';
 import { escapeHtml } from '@/lib/security';
 
-export const ADMIN_EMAIL = 'clipganji@gmail.com';
+function getAdminEmail(): string {
+  const e = process.env.ADMIN_EMAIL;
+  return typeof e === 'string' && e.trim() ? e.trim().toLowerCase() : 'clipganji@gmail.com';
+}
+export const ADMIN_EMAIL = getAdminEmail();
 const LOGO_URL = 'https://clipganji.com/images/LogoNoBackground.png';
 const SITE_URL = 'https://clipganji.com';
 
@@ -106,6 +110,7 @@ export function buildContactAdminHtml(data: {
   budget: string;
   message: string;
   requestRateCard: boolean;
+  requestPitchDeck: boolean;
 }): string {
   const body = `
     ${detailCard(
@@ -119,6 +124,7 @@ export function buildContactAdminHtml(data: {
       { label: 'Email:', value: data.email },
       { label: 'Budget:', value: data.budget },
       { label: 'Requested Rate Card:', value: data.requestRateCard ? 'Yes' : 'No' },
+      { label: 'Requested Pitch Deck:', value: data.requestPitchDeck ? 'Yes' : 'No' },
     ])}
     <p style="margin: 0 0 8px 0; font-weight: 700; color: #1e3a5f; font-size: 14px;">Message / Brief</p>
     <div style="background: #f5f5f5; border-radius: 8px; padding: 16px; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${escapeHtml(data.message)}</div>
@@ -131,14 +137,16 @@ export function buildContactSenderHtml(data: {
   name: string;
   companyName: string;
   requestRateCard: boolean;
-  attachmentIncluded?: boolean;
+  requestPitchDeck: boolean;
+  rateCardAttached?: boolean;
+  pitchDeckAttached?: boolean;
 }): string {
-  const rateCardNote =
-    data.requestRateCard && data.attachmentIncluded
-      ? '<p style="margin: 16px 0 0 0; font-size: 14px;">Your confidential Rate Card is attached to this email.</p>'
-      : data.requestRateCard
-        ? '<p style="margin: 16px 0 0 0; font-size: 14px;">You requested the Rate Card; we will send it separately if needed.</p>'
-        : '';
+  const notes: string[] = [];
+  if (data.requestRateCard && data.rateCardAttached) notes.push('Your confidential Rate Card is attached.');
+  else if (data.requestRateCard) notes.push('You requested the Rate Card; we will send it separately if needed.');
+  if (data.requestPitchDeck && data.pitchDeckAttached) notes.push('The Pitch Deck is attached.');
+  else if (data.requestPitchDeck) notes.push('You requested the Pitch Deck; we will send it separately if needed.');
+  const notesHtml = notes.length ? notes.map((n) => `<p style="margin: 16px 0 0 0; font-size: 14px;">${escapeHtml(n)}</p>`).join('') : '';
   const body = `
     ${detailCard(
       'Application Details',
@@ -147,7 +155,7 @@ export function buildContactSenderHtml(data: {
     )}
     <p style="margin: 0; font-size: 14px;">Hi <strong>${escapeHtml(data.name)}</strong>,</p>
     <p style="margin: 12px 0 0 0; font-size: 14px; line-height: 1.6;">Thank you for reaching out. Your brief for <strong>${escapeHtml(data.companyName)}</strong> is in our queue.</p>
-    ${rateCardNote}
+    ${notesHtml}
     <p style="margin: 20px 0 0 0; font-size: 14px; color: #666;">— The ClipGanji Team</p>
   `;
   return emailWrapper('Campaign Brief Received', 'ClipGanji', 'Your brand inside every clip. Every view verified.', body);

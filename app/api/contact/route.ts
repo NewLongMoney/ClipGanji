@@ -29,13 +29,17 @@ async function fetchAttachment(url: string): Promise<Buffer | null> {
     }
 }
 
+function toBool(val: unknown): boolean {
+    return val === true || val === 'on' || String(val).toLowerCase() === 'true';
+}
+
 export async function POST(req: Request) {
     if (!rateLimitContact(req)) {
         return NextResponse.json({ error: 'Too many requests. Try again later.' }, { status: 429 });
     }
     try {
         const body = await req.json();
-        const { companyName, name, email, budget, message, requestRateCard } = body;
+        const { companyName, name, email, budget, message, requestRateCard, requestPitchDeck } = body;
 
         const companyNameS = sanitizeString(companyName, contactLimits.companyName);
         const nameS = sanitizeString(name, contactLimits.name);
@@ -50,7 +54,8 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Invalid email address.' }, { status: 400 });
         }
 
-        const requestRateCardBool = requestRateCard === true || requestRateCard === 'on' || String(requestRateCard).toLowerCase() === 'true';
+        const requestRateCardBool = toBool(requestRateCard);
+        const requestPitchDeckBool = toBool(requestPitchDeck);
 
         if (!isEmailConfigured()) {
             return NextResponse.json(
@@ -67,6 +72,7 @@ export async function POST(req: Request) {
                 budget: budgetS,
                 message: messageS,
                 requestRateCard: requestRateCardBool,
+                requestPitchDeck: requestPitchDeckBool,
             },
         });
 
@@ -78,6 +84,7 @@ export async function POST(req: Request) {
             budget: budgetS,
             message: messageS,
             requestRateCard: requestRateCardBool,
+            requestPitchDeck: requestPitchDeckBool,
         });
 
         await sendMail({
@@ -90,12 +97,15 @@ export async function POST(req: Request) {
 
         const senderAttachments: Array<{ filename: string; content: Buffer }> = [];
         if (requestRateCardBool) {
-            const rateCardPdf = await fetchAttachment(RATE_CARD_URL) ?? await fetchAttachment(PITCH_DECK_URL);
+            const rateCardPdf = await fetchAttachment(RATE_CARD_URL);
             if (rateCardPdf && rateCardPdf.length > 0) {
-                senderAttachments.push({
-                    filename: 'ClipGanji_RateCard.pdf',
-                    content: rateCardPdf,
-                });
+                senderAttachments.push({ filename: 'ClipGanji_RateCard.pdf', content: rateCardPdf });
+            }
+        }
+        if (requestPitchDeckBool) {
+            const pitchDeckPdf = await fetchAttachment(PITCH_DECK_URL);
+            if (pitchDeckPdf && pitchDeckPdf.length > 0) {
+                senderAttachments.push({ filename: 'ClipGanji_PitchDeck.pdf', content: pitchDeckPdf });
             }
         }
 
@@ -103,7 +113,9 @@ export async function POST(req: Request) {
             name: nameS,
             companyName: companyNameS,
             requestRateCard: requestRateCardBool,
-            attachmentIncluded: senderAttachments.length > 0,
+            requestPitchDeck: requestPitchDeckBool,
+            rateCardAttached: requestRateCardBool && senderAttachments.some((a) => a.filename.includes('RateCard')),
+            pitchDeckAttached: requestPitchDeckBool && senderAttachments.some((a) => a.filename.includes('PitchDeck')),
         });
 
         await sendMail({

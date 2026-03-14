@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { signOut } from 'next-auth/react'
 import { Submission } from '@/app/types/dashboard'
+import { safeHref } from '@/lib/security'
 import Image from 'next/image'
 
 const navItems = [
@@ -201,7 +202,7 @@ export default function SubmissionsPage() {
                   </div>
                   <div className="col-span-1 flex items-center justify-end">
                     {sub.postUrl && (
-                      <a href={sub.postUrl} target="_blank" rel="noopener noreferrer"
+                      <a href={safeHref(sub.postUrl)} target="_blank" rel="noopener noreferrer"
                         className="text-[#4A5259] hover:text-[#00C853] transition-colors">
                         <ExternalLink size={13} />
                       </a>

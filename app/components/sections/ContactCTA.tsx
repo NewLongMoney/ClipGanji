@@ -127,16 +127,29 @@ export function ContactCTA() {
                                         className="w-full min-h-[120px] bg-black/10 border-2 border-black/20 text-black placeholder:text-black/60 px-4 py-3.5 rounded-lg focus:outline-none focus:border-black focus:ring-2 focus:ring-black/20 transition-colors resize-none"
                                     ></textarea>
 
-                                    <div className="flex items-start gap-3">
-                                        <input
-                                            type="checkbox"
-                                            name="requestRateCard"
-                                            id="requestRateCard"
-                                            className="mt-1 w-5 h-5 rounded border-2 border-black/30 text-black focus:ring-2 focus:ring-black/30 bg-black/10 transition-colors cursor-pointer"
-                                        />
-                                        <label htmlFor="requestRateCard" className="text-black/80 text-sm leading-tight cursor-pointer select-none">
-                                            Please send me the confidential ClipGanji Rate Card
-                                        </label>
+                                    <div className="flex flex-col gap-3">
+                                        <div className="flex items-start gap-3">
+                                            <input
+                                                type="checkbox"
+                                                name="requestRateCard"
+                                                id="requestRateCard"
+                                                className="mt-1 w-5 h-5 rounded border-2 border-black/30 text-black focus:ring-2 focus:ring-black/30 bg-black/10 transition-colors cursor-pointer"
+                                            />
+                                            <label htmlFor="requestRateCard" className="text-black/80 text-sm leading-tight cursor-pointer select-none">
+                                                Please send me the confidential ClipGanji Rate Card
+                                            </label>
+                                        </div>
+                                        <div className="flex items-start gap-3">
+                                            <input
+                                                type="checkbox"
+                                                name="requestPitchDeck"
+                                                id="requestPitchDeck"
+                                                className="mt-1 w-5 h-5 rounded border-2 border-black/30 text-black focus:ring-2 focus:ring-black/30 bg-black/10 transition-colors cursor-pointer"
+                                            />
+                                            <label htmlFor="requestPitchDeck" className="text-black/80 text-sm leading-tight cursor-pointer select-none">
+                                                Please send me the ClipGanji Pitch Deck
+                                            </label>
+                                        </div>
                                     </div>
 
                                     {status === "error" && (
