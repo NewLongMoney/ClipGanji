@@ -15,7 +15,7 @@ import {
     buildContactSenderHtml,
 } from '@/lib/email';
 
-const RATE_CARD_URL = 'https://clipganji.com/downloads/ClipGanji_RateCard.pdf';
+const RATE_CARD_URL = 'https://clipganji.com/downloads/ClipGanji_Rate_Card.docx';
 const PITCH_DECK_URL = 'https://clipganji.com/downloads/ClipGanji_PitchDeck.pdf';
 
 async function fetchAttachment(url: string): Promise<Buffer | null> {
@@ -99,7 +99,7 @@ export async function POST(req: Request) {
         if (requestRateCardBool) {
             const rateCardPdf = await fetchAttachment(RATE_CARD_URL);
             if (rateCardPdf && rateCardPdf.length > 0) {
-                senderAttachments.push({ filename: 'ClipGanji_RateCard.pdf', content: rateCardPdf });
+                senderAttachments.push({ filename: 'ClipGanji_Rate_Card.docx', content: rateCardPdf });
             }
         }
         if (requestPitchDeckBool) {
@@ -114,7 +114,7 @@ export async function POST(req: Request) {
             companyName: companyNameS,
             requestRateCard: requestRateCardBool,
             requestPitchDeck: requestPitchDeckBool,
-            rateCardAttached: requestRateCardBool && senderAttachments.some((a) => a.filename.includes('RateCard')),
+            rateCardAttached: requestRateCardBool && senderAttachments.some((a) => a.filename.includes('Rate_Card')),
             pitchDeckAttached: requestPitchDeckBool && senderAttachments.some((a) => a.filename.includes('PitchDeck')),
         });
 

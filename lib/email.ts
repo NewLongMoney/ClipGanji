@@ -62,18 +62,18 @@ function emailWrapper(title: string, orgName: string, tagline: string, bodyHtml:
 <html>
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
 <body style="margin:0; padding:0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5;">
-  <div style="max-width: 600px; margin: 0 auto; background: #fff;">
-    <div style="background: #1e3a5f; color: #fff; padding: 32px 24px; text-align: center;">
-      <img src="${LOGO_URL}" alt="ClipGanji" style="height: 48px; margin-bottom: 16px;" />
-      <h1 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700;">${escapeHtml(title)}</h1>
-      <p style="margin: 0; font-size: 14px; opacity: 0.95;">${escapeHtml(orgName)}</p>
-      <p style="margin: 8px 0 0 0; font-size: 12px; opacity: 0.85;">"${escapeHtml(tagline)}"</p>
+  <div style="max-width: 600px; margin: 0 auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+    <div style="background: #000; color: #fff; padding: 40px 24px; text-align: center; position: relative;">
+      <img src="${LOGO_URL}" alt="ClipGanji" style="height: 80px; margin-bottom: 20px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));" />
+      <h1 style="margin: 0 0 12px 0; font-size: 26px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">${escapeHtml(title)}</h1>
+      <p style="margin: 0; font-size: 16px; opacity: 0.95; font-weight: 500;">${escapeHtml(orgName)}</p>
+      <p style="margin: 8px 0 0 0; font-size: 14px; opacity: 0.85; font-style: italic;">${escapeHtml(tagline)}</p>
     </div>
     <div style="padding: 24px; color: #333;">
       ${bodyHtml}
     </div>
-    <div style="padding: 16px 24px; background: #f9f9f9; font-size: 12px; color: #666;">
-      <a href="${SITE_URL}" style="color: #F5B800;">clipganji.com</a> · <a href="mailto:${ADMIN_EMAIL}" style="color: #666;">${ADMIN_EMAIL}</a>
+    <div style="padding: 16px 24px; background: #f8f8f8; font-size: 12px; color: #333; border-top: 4px solid #00C853;">
+      <a href="${SITE_URL}" style="color: #00C853; text-decoration: none; font-weight: 700;">clipganji.com</a> · <a href="mailto:${ADMIN_EMAIL}" style="color: #000; text-decoration: none; font-weight: 600;">${ADMIN_EMAIL}</a>
     </div>
   </div>
 </body>
@@ -82,9 +82,9 @@ function emailWrapper(title: string, orgName: string, tagline: string, bodyHtml:
 
 function detailCard(title: string, iconLabel: string, content: string): string {
   return `
-    <div style="background: #fef9e6; border: 1px solid #e8d48a; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
-      <p style="margin: 0 0 8px 0; font-weight: 700; color: #1e3a5f; font-size: 14px;">${escapeHtml(iconLabel)} ${escapeHtml(title)}</p>
-      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #333;">${content}</p>
+    <div style="background: #f0f9f0; border: 2px solid #00C853; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,200,83,0.15);">
+      <p style="margin: 0 0 8px 0; font-weight: 700; color: #000; font-size: 16px; display: flex; align-items: center;">📋 ${escapeHtml(title)}</p>
+      <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #333;">${content}</p>
     </div>`;
 }
 
@@ -96,8 +96,8 @@ function infoCard(title: string, rows: Array<{ label: string; value: string }>):
     )
     .join('');
   return `
-    <div style="background: #e8f4fc; border: 1px solid #b8d4e8; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
-      <p style="margin: 0 0 12px 0; font-weight: 700; color: #1e3a5f; font-size: 14px;">${escapeHtml(title)}</p>
+    <div style="background: #f5f5f5; border: 2px solid #000; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <p style="margin: 0 0 12px 0; font-weight: 700; color: #000; font-size: 16px; display: flex; align-items: center;">📊 ${escapeHtml(title)}</p>
       ${cells}
     </div>`;
 }
