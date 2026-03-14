@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getAdminSession } from '@/lib/admin'
 import { prisma } from '@/lib/prisma'
-import { isValidCuid, safeNonNegativeInt, submissionLimits } from '@/lib/security'
+import { isValidCuid, sanitizeString, submissionLimits } from '@/lib/security'
 
 export async function POST(req: Request) {
   const session = await getAdminSession()
@@ -18,44 +18,28 @@ export async function POST(req: Request) {
   if (!submissionId || !isValidCuid(submissionId)) {
     return NextResponse.json({ error: 'Invalid submission' }, { status: 400 })
   }
-  const viewsNum = safeNonNegativeInt(b.views, submissionLimits.views)
+  const reason = sanitizeString(b.reason, submissionLimits.rejectionReason) || null
 
   const submission = await prisma.submission.findUnique({
-    where: { id: String(submissionId) },
-    include: { campaign: true },
+    where: { id: submissionId },
   })
 
   if (!submission) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 })
   }
 
-  const earnings = (viewsNum / 1000) * submission.campaign.payPer1000Views
+  if (submission.status !== 'pending') {
+    return NextResponse.json({ error: 'Submission already reviewed' }, { status: 400 })
+  }
 
   await prisma.submission.update({
     where: { id: String(submissionId) },
-    data: { status: 'approved', views: viewsNum, earnings, reviewedAt: new Date() },
-  })
-
-  // Update enrollment aggregates
-  await prisma.campaignEnrollment.updateMany({
-    where: {
-      clipperId: submission.clipperId,
-      campaignId: submission.campaignId,
-    },
     data: {
-      totalViews: { increment: viewsNum },
-      totalEarnings: { increment: earnings },
-      clipsApproved: { increment: 1 },
+      status: 'rejected',
+      rejectionReason: reason,
+      reviewedAt: new Date(),
     },
   })
 
-  await prisma.clipperProfile.update({
-    where: { id: submission.clipperId },
-    data: {
-      totalViews: { increment: viewsNum },
-      totalEarnings: { increment: earnings },
-    },
-  })
-
-  return NextResponse.json({ success: true, earnings })
+  return NextResponse.json({ success: true })
 }

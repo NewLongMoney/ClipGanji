@@ -9,6 +9,7 @@ declare module 'next-auth' {
       image?: string | null
       hasProfile: boolean
       profileStatus: string | null
+      isAdmin?: boolean
     }
   }
 }

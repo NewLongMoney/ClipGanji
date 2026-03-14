@@ -21,8 +21,12 @@ export default withAuth(
       return NextResponse.next()
     }
 
+    // Admin routes: redirect non-admins to home
+    if (normalizedPath.startsWith('/admin') && token && !(token as { isAdmin?: boolean }).isAdmin) {
+      return NextResponse.redirect(new URL('/', req.url))
+    }
+
     // Force registration if authenticated but no profile
-    // Only redirect if NOT already on a public page (which we checked above)
     if (token && !token.hasProfile && normalizedPath.startsWith('/clippers/')) {
       return NextResponse.redirect(new URL('/clippers/register', req.url))
     }
@@ -51,9 +55,9 @@ export default withAuth(
           return true
         }
 
-        // Admin routes
-        if (normalizedPath.startsWith('/api/admin')) {
-          return !!token
+        // Admin UI and API: only clipganji@gmail.com
+        if (normalizedPath.startsWith('/admin') || normalizedPath.startsWith('/api/admin')) {
+          return !!(token && (token as { isAdmin?: boolean }).isAdmin)
         }
 
         // Protected internal clipper routes (dashboard/settings/etc)
@@ -70,6 +74,7 @@ export default withAuth(
 export const config = {
   matcher: [
     '/clippers/:path*',
+    '/admin/:path*',
     '/api/clipper/:path*',
     '/api/admin/:path*',
   ],

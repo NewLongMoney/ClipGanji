@@ -175,6 +175,18 @@ model Submission {
   updatedAt       DateTime @updatedAt
 }
 
+// Contact form submissions (campaign briefs from website)
+model ContactSubmission {
+  id              String   @id @default(cuid())
+  companyName     String
+  name            String
+  email           String
+  budget          String
+  message         String   @db.Text
+  requestRateCard Boolean  @default(false)
+  createdAt       DateTime @default(now())
+}
+
 // Payout records
 model Payout {
   id              String   @id @default(cuid())

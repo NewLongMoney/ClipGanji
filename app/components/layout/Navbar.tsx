@@ -3,11 +3,14 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { useSession } from "next-auth/react"
 import { cn } from "@/app/lib/utils"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Shield } from "lucide-react"
 import { Button } from "@/app/components/ui/Button"
 
 export function Navbar() {
+    const { data: session } = useSession()
+    const isAdmin = (session?.user as { isAdmin?: boolean })?.isAdmin === true
     const [scrolled, setScrolled] = useState(false)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -52,6 +55,12 @@ export function Navbar() {
                         For Clippers
                         <span className="bg-green text-black text-[10px] font-black px-1.5 py-0.5 rounded">EARN</span>
                     </Link>
+                    {isAdmin && (
+                        <Link href="/admin" className="flex items-center gap-1.5 text-[#F5B800] font-semibold">
+                            <Shield size={16} />
+                            Admin
+                        </Link>
+                    )}
                     <Button variant="outline-white" size="sm" asChild>
                         <Link href="/contact">Book a Call</Link>
                     </Button>
@@ -85,6 +94,11 @@ export function Navbar() {
                     <Link href="/clippers" className="text-white text-lg font-sans font-medium" onClick={() => setMobileMenuOpen(false)}>How It Works</Link>
                     <Link href="/clippers/campaigns" className="text-white text-lg font-sans font-medium" onClick={() => setMobileMenuOpen(false)}>Open Campaigns</Link>
                     <Link href="/clippers/register" className="text-white text-lg font-sans font-medium" onClick={() => setMobileMenuOpen(false)}>Register</Link>
+                    {isAdmin && (
+                        <Link href="/admin" className="flex items-center gap-2 text-[#F5B800] text-lg font-sans font-medium" onClick={() => setMobileMenuOpen(false)}>
+                            <Shield size={18} /> Admin
+                        </Link>
+                    )}
 
                     <div className="flex flex-col gap-4 mt-6">
                         <Button variant="filled-green" className="w-full justify-center" asChild>

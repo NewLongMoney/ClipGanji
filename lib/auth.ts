@@ -19,6 +19,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user, trigger }) {
       if (user) {
         token.userId = user.id
+        token.email = user.email
       }
       // Re-check profile: on sign-in, when we don't have it yet, or when client calls session.update() (e.g. after registration)
       if (token.userId && (trigger === 'update' || token.hasProfile === undefined || token.hasProfile === false)) {
@@ -28,6 +29,8 @@ export const authOptions: NextAuthOptions = {
         token.hasProfile = !!profile
         token.profileStatus = profile?.status ?? null
       }
+      const email = typeof token.email === 'string' ? token.email.trim().toLowerCase() : ''
+      token.isAdmin = email === 'clipganji@gmail.com'
       return token
     },
     async session({ session, token }) {
@@ -35,6 +38,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.userId as string
         session.user.hasProfile = token.hasProfile as boolean
         session.user.profileStatus = token.profileStatus as string | null
+        session.user.isAdmin = token.isAdmin as boolean
       }
       return session
     },
