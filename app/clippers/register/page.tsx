@@ -12,7 +12,7 @@ import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 
 export default function ClipperRegister() {
-    const { data: session, status: authStatus } = useSession()
+    const { data: session, status: authStatus, update: updateSession } = useSession()
     const router = useRouter()
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
     const [errorMessage, setErrorMessage] = useState('')
@@ -61,7 +61,8 @@ export default function ClipperRegister() {
 
             if (res.ok && result.success) {
                 setStatus('success')
-                // Re-fetch session to update token with hasProfile=true
+                // Refresh session so JWT gets hasProfile=true and middleware allows dashboard
+                await updateSession()
                 router.refresh()
                 setTimeout(() => {
                     router.push('/clippers/dashboard')

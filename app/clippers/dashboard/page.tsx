@@ -59,14 +59,20 @@ export default function ClipperDashboard() {
   useEffect(() => {
     if (authStatus === 'authenticated') {
       fetch('/api/clipper/dashboard')
-        .then(r => r.json())
+        .then(r => {
+          if (r.status === 404) {
+            router.push('/clippers/register')
+            return null
+          }
+          return r.json()
+        })
         .then(data => {
-          setDashData(data)
+          if (data) setDashData(data)
           setLoading(false)
         })
         .catch(() => setLoading(false))
     }
-  }, [authStatus])
+  }, [authStatus, router])
 
   if (loading || authStatus === 'loading') {
     return (

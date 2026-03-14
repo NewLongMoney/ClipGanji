@@ -50,13 +50,32 @@ export default function SettingsPage() {
     useEffect(() => {
         if (authStatus === 'authenticated') {
             fetch('/api/clipper/profile')
-                .then(r => r.json())
+                .then(r => {
+                    if (r.status === 404) {
+                        router.push('/clippers/register')
+                        return
+                    }
+                    return r.json()
+                })
                 .then(data => {
-                    setProfile(data)
+                    if (data && !data.error) {
+                        setProfile({
+                            fullName: data.fullName ?? '',
+                            phone: data.phone ?? '',
+                            tiktokHandle: data.tiktokHandle ?? '',
+                            instagramHandle: data.instagramHandle ?? '',
+                            youtubeChannel: data.youtubeChannel ?? '',
+                            payoutMethod: data.payoutMethod ?? 'mpesa',
+                            mpesaNumber: data.mpesaNumber ?? '',
+                            bankName: data.bankName ?? '',
+                            bankAccount: data.bankAccount ?? '',
+                        })
+                    }
                     setLoading(false)
                 })
+                .catch(() => setLoading(false))
         }
-    }, [authStatus])
+    }, [authStatus, router])
 
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -67,7 +86,17 @@ export default function SettingsPage() {
             const res = await fetch('/api/clipper/profile', {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(profile)
+                body: JSON.stringify({
+                    fullName: profile.fullName,
+                    phone: profile.phone,
+                    tiktokHandle: profile.tiktokHandle,
+                    instagramHandle: profile.instagramHandle,
+                    youtubeChannel: profile.youtubeChannel,
+                    payoutMethod: profile.payoutMethod,
+                    mpesaNumber: profile.mpesaNumber,
+                    bankName: profile.bankName,
+                    bankAccount: profile.bankAccount,
+                })
             })
 
             if (res.ok) {
