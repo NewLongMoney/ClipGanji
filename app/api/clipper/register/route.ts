@@ -9,6 +9,13 @@ import {
   profileLimits,
   safeNonNegativeInt,
 } from '@/lib/security'
+import {
+  isEmailConfigured,
+  sendMail,
+  ADMIN_EMAIL,
+  buildClipperAdminHtml,
+  buildClipperSenderHtml,
+} from '@/lib/email'
 
 const CONTENT_TYPES_MAX = 20
 const CONTENT_TYPE_ITEM_MAX = 50
@@ -108,6 +115,35 @@ export async function POST(req: Request) {
         status: 'pending',
       },
     })
+
+    const clipperEmail = session.user.email ?? ''
+    if (isEmailConfigured() && clipperEmail) {
+      try {
+        const fromAddress = process.env.EMAIL_USER!
+        await sendMail({
+          from: `ClipGanji <${fromAddress}>`,
+          to: ADMIN_EMAIL,
+          subject: `New Clipper Sign-Up: ${fullName}`,
+          html: buildClipperAdminHtml({
+            fullName,
+            email: clipperEmail,
+            phone,
+            county,
+            tiktokHandle: profile.tiktokHandle,
+            instagramHandle: profile.instagramHandle,
+            payoutMethod,
+          }),
+        })
+        await sendMail({
+          from: `ClipGanji <${fromAddress}>`,
+          to: clipperEmail,
+          subject: 'Clipper application received — ClipGanji',
+          html: buildClipperSenderHtml({ fullName }),
+        })
+      } catch (emailErr) {
+        console.error('Clipper register: email send failed', emailErr)
+      }
+    }
 
     return NextResponse.json({ success: true, profileId: profile.id })
   } catch {

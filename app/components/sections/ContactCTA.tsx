@@ -6,10 +6,12 @@ import { fadeUp } from "@/app/lib/utils"
 
 export function ContactCTA() {
     const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
+    const [errorMessage, setErrorMessage] = useState<string>("")
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setStatus("submitting")
+        setErrorMessage("")
 
         const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries(formData.entries())
@@ -21,13 +23,18 @@ export function ContactCTA() {
                 body: JSON.stringify(data)
             })
 
+            const json = await response.json().catch(() => ({}))
+            const message = typeof json?.error === 'string' ? json.error : ''
+
             if (response.ok) {
                 setStatus("success")
             } else {
                 setStatus("error")
+                setErrorMessage(message || 'There was an error sending your message. Please try again.')
             }
         } catch {
             setStatus("error")
+            setErrorMessage('There was an error sending your message. Please try again.')
         }
     }
 
@@ -134,7 +141,7 @@ export function ContactCTA() {
 
                                     {status === "error" && (
                                         <div className="text-red-700 font-medium text-sm bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3">
-                                            There was an error sending your message. Please try again.
+                                            {errorMessage}
                                         </div>
                                     )}
 
