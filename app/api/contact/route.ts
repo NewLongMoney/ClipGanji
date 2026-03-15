@@ -64,17 +64,24 @@ export async function POST(req: Request) {
             );
         }
 
-        await prisma.contactSubmission.create({
-            data: {
-                companyName: companyNameS,
-                name: nameS,
-                email: emailS,
-                budget: budgetS,
-                message: messageS,
-                requestRateCard: requestRateCardBool,
-                requestPitchDeck: requestPitchDeckBool,
-            },
-        });
+        // Try database save with fallback
+        try {
+            await prisma.contactSubmission.create({
+                data: {
+                    companyName: companyNameS,
+                    name: nameS,
+                    email: emailS,
+                    budget: budgetS,
+                    message: messageS,
+                    requestRateCard: requestRateCardBool,
+                    requestPitchDeck: requestPitchDeckBool,
+                },
+            });
+            console.log('Contact submission saved to database');
+        } catch (dbError) {
+            console.warn('Database save failed, using email-only mode:', dbError);
+            // Continue with email sending even if database fails
+        }
 
         const fromAddress = process.env.EMAIL_USER!;
         const adminHtml = buildContactAdminHtml({

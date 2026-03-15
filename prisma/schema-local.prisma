@@ -1,0 +1,202 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ── NEXTAUTH REQUIRED TABLES ─────────────────────────────────────────
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires      DateTime
+
+  @@unique([identifier, token])
+}
+
+// ── CORE CLIPPER TABLES ───────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  clipperProfile ClipperProfile?
+  createdAt     DateTime  @default(now())
+}
+
+// Created when a user completes the registration form
+model ClipperProfile {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Personal info
+  fullName        String
+  phone           String
+  county          String
+
+  // Platforms
+  tiktokHandle    String?
+  tiktokFollowers Int?     @default(0)
+  instagramHandle String?
+  instagramFollowers Int?  @default(0)
+  youtubeChannel  String?
+  youtubeSubscribers Int?  @default(0)
+  postFrequency   String?  // "Daily" | "3-5x" | "1-2x" | "Less"
+
+  // Content
+  contentTypes    String // JSON string array e.g. '["Sports", "Comedy"]'
+  audienceDescription String?
+  bestClipUrl     String?
+
+  // Payout
+  payoutMethod    String   // "mpesa" | "bank"
+  mpesaNumber     String?
+  bankName        String?
+  bankAccount     String?
+
+  // Status
+  status          String   @default("pending") // "pending" | "approved" | "rejected"
+  approvedAt      DateTime?
+
+  // Stats (updated by admin or automated jobs)
+  totalEarnings   Float    @default(0)
+  totalViews      Int      @default(0)
+
+  submissions     Submission[]
+  enrollments     CampaignEnrollment[]
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+// Campaigns created by admin
+model Campaign {
+  id              String   @id @default(cuid())
+  brand           String   // e.g. "Odibets" or "Brand Partner A"
+  brandPublic     String   // what clippers see e.g. "Brand Partner A"
+  category        String   // "Betting" | "Fintech" | "Telco" etc
+  accentColor     String   @default("#00C853")
+
+  headline        String
+  brief           String
+  logoInstructions String?
+
+  format          String   // "logo-bug" | "video-placement" | "both"
+  platforms       String // JSON string array e.g. '["tiktok", "reels", "shorts"]'
+
+  payPer1000Views Float    // KSh per 1000 views
+  bonusThreshold  Int?     // views at which bonus kicks in
+  bonusAmount     Float?   // KSh bonus amount
+
+  startDate       DateTime
+  endDate         DateTime
+  maxClippers     Int      @default(20)
+  status          String   @default("open") // "open" | "filling" | "full" | "closed"
+
+  enrollments     CampaignEnrollment[]
+  submissions     Submission[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// When a clipper joins a campaign
+model CampaignEnrollment {
+  id              String   @id @default(cuid())
+  clipperId       String
+  campaignId      String
+  clipper         ClipperProfile @relation(fields: [clipperId], references: [id], onDelete: Cascade)
+  campaign        Campaign       @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  enrolledAt      DateTime @default(now())
+  status          String   @default("active") // "active" | "completed" | "removed"
+
+  // Aggregated stats for this clipper on this campaign
+  totalViews      Int      @default(0)
+  totalEarnings   Float    @default(0)
+  clipsSubmitted  Int      @default(0)
+  clipsApproved   Int      @default(0)
+
+  @@unique([clipperId, campaignId])
+}
+
+// Individual clip submissions
+model Submission {
+  id              String   @id @default(cuid())
+  clipperId       String
+  campaignId      String
+  clipper         ClipperProfile @relation(fields: [clipperId], references: [id], onDelete: Cascade)
+  campaign        Campaign       @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  platform        String   // "tiktok" | "reels" | "shorts"
+  postUrl         String
+  views           Int      @default(0)
+  earnings        Float    @default(0)
+  status          String   @default("pending") // "pending" | "approved" | "rejected"
+  rejectionReason String?
+
+  submittedAt     DateTime @default(now())
+  reviewedAt      DateTime?
+  updatedAt       DateTime @updatedAt
+}
+
+// Contact form submissions (campaign briefs from website)
+model ContactSubmission {
+  id                String   @id @default(cuid())
+  companyName       String
+  name              String
+  email             String
+  budget            String
+  message           String
+  requestRateCard   Boolean  @default(false)
+  requestPitchDeck  Boolean  @default(false)
+  createdAt         DateTime @default(now())
+}
+
+// Payout records
+model Payout {
+  id              String   @id @default(cuid())
+  clipperId       String
+  amount          Float
+  method          String   // "mpesa" | "bank"
+  reference       String?  // M-Pesa transaction code
+  status          String   @default("pending") // "pending" | "sent" | "failed"
+  periodStart     DateTime
+  periodEnd     DateTime
+  paidAt          DateTime?
+  createdAt       DateTime @default(now())
+}
